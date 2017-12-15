@@ -2,10 +2,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const bookSchema = new Schema({
-    title:String,
-    isbn:String
-})
+    authors:[String],
+    title: String,
+    publisher:String,
+    publishedDate:String,
+    description:String,
+    selfLink:String,//link to goole books
+    thumbNail:String,
+    owner:String,//user who owns the book
+    rq_status:{
+      rq_state:String,//requested, traded, available, etc...
+      rq_by:String//user making request
+    }
+});
 
 
 
-module.exports = mongoose.model('book', userSchema);
+module.exports = mongoose.model('book', bookSchema);

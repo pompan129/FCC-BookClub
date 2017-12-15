@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 var bodyParser = require("body-parser");
 const path = require('path');
-const Routes = require("./server/routes");
+const BookRoutes = require("./server/routes/book-routes");
+const UserRoutes = require("./server/routes/user-routes");
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -10,7 +11,7 @@ app.use(bodyParser.json());
 
 //set up database
 var mongoose = require('mongoose');
-mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds259855.mlab.com:59855/nightlife`,
+mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds129166.mlab.com:29166/book-trading-club`,
     { useMongoClient: true, promiseLibrary: global.Promise });
 
 var db = mongoose.connection;
@@ -19,26 +20,8 @@ db.once('open', function() {
   console.log("connected to mongoDB");// we're connected!
 });
 
-Routes(app);
-/*
-if (process.env.NODE_ENV === 'production') {
-  console.log(">>>(process.env.NODE_ENV === 'production'");
-
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname,'client/build', 'index.html'));
-  });
-
-}else{
-  console.log(">>>(process.env.NODE_ENV !== 'production'");
-  app.use(express.static(path.join(__dirname, 'client/public')));
-  app.get('/', function (req, res) {
-    console.log("call to home");
-    res.sendFile(path.join(__dirname, 'client/public', 'index.html'));
-  });
-}
-*/
-
+BookRoutes(app); //add routes for Books DB
+UserRoutes(app);//add routes for user DB
 
 app.set('port', (process.env.PORT || 3001));
 
