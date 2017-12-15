@@ -40,8 +40,6 @@ module.exports = function(app){
       resp.send(new Error("Error!-token/username mismatch"));
     }
 
-
-
   })
 
 
