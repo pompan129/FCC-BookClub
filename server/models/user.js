@@ -6,7 +6,7 @@ const userSchema = new Schema({
   username: { type: String, unique: true, lowercase: true },
   password: String,
   email: String,
-  name:{
+  fullname:{
     first:String,
     last: String,
     mi:String
@@ -20,7 +20,7 @@ const userSchema = new Schema({
   },
   book_ids:[String],
   wishlist: [String],
-  type:String //ie twitter or local etc...
+  auth_type:String //ie twitter or local etc...
 });
 
 userSchema.pre('save', function(next) {

@@ -10,6 +10,7 @@ const bookSchema = new Schema({
     selfLink:String,//link to goole books
     thumbNail:String,
     owner:String,//user who owns the book
+    isbn13:String,
     rq_status:{
       rq_state:String,//requested, traded, available, etc...
       rq_by:String//user making request
