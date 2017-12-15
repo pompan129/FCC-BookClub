@@ -38,7 +38,6 @@ const jwtStrategyOptions = {
   secretOrKey: env.SECRET
 };
 
-
 //for refresh of page verify user & token
 passport.use(new JwtStrategy(jwtStrategyOptions, function(jwt_payload, done) {
       User.findOne({ username: jwt_payload.username }, function (err, user) {

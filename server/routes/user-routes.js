@@ -31,7 +31,9 @@ module.exports = function(app){
   })
 
   //update user info
-
+  app.post('/api/user/auth/jwt',Authenticate.JWTauth,(req,resp)=>{
+    resp.send({msg:"jwtAUTH", user:req.user, data:req.body.data});
+  })
 
 
 }

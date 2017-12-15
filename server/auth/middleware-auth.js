@@ -42,3 +42,26 @@ exports.signup = function(req, res, next){
 exports.signin = function(req, res, next){
   res.json({success:true, token: getToken(req.user),username:req.user.username})
 }
+
+exports.JWTauth = function(req, res, next){
+console.log("here(1):");//todo
+
+  let token = req.headers['authorization'];
+  if (!token) return next(); //if no token, continue
+
+  token = token.replace('Bearer ', '');
+
+  // decode
+  try {
+    const decoded = jwt.decode(token, env.SECRET);
+    console.log("JWTauth:",decoded);//todo
+    req.user = decoded;
+    next();
+  }
+  catch (err) {
+     console.log(err.name, err.message);//todo
+     //const error = new Error(err.message)
+     next(new Error("Unable to Authorize Token"));
+  }
+
+}
