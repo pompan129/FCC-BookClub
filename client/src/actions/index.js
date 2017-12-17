@@ -8,3 +8,18 @@ export const FETCHING_DONE = "FETCHING_DONE";
 export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
 export const AUTH_JWT = "AUTH_JWT";
 export const LOGIN_USER_JWT = "LOGIN_USER_JWT"
+export const RENDER_MODAL="RENDER_MODAL"
+
+
+
+export const renderModal = (visible, modal_type)=>{
+  console.log('renderModal', visible, modal_type);//todo
+  return {
+      type: RENDER_MODAL,
+      payload: {modal_type,visible}
+   }
+}
+
+export const closeModal = (visible, type)=>{
+
+}

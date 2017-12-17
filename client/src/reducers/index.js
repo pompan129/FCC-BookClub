@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import userReducer from './user-reducer';
-//import messageReducer from './app-message-reducer';
+import modalReducer from './modal-reducer';
 import {BATCH_ACTIONS} from "../actions";
 
 export function enableBatching(reduce) {
@@ -15,7 +15,8 @@ export function enableBatching(reduce) {
 }
 
 const rootReducer = combineReducers({
-    user: userReducer
+    user: userReducer,
+		modal:modalReducer
 });
 
 export default rootReducer;
