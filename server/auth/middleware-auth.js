@@ -10,30 +10,31 @@ const getToken = function(payload){
 
 exports.getToken = getToken;
 
-//local sign up middelware ie. Username & password
+//local sign up middelware ie. Username & password & email(not req)
 exports.signup = function(req, res, next){
-    const {username,password} = req.body;
+    const {username,password,email} = req.body;
 
     if(!username || !password){
       return res.status(422).send({error:"you must provide a username and password"})
     }
 
-    User.findOne({username:username},function(err,exists){
+    User.findOne({username:username.toLowerCase()},function(err,exists){
+      console.log("findOne",err,exists);//todo
       if(err){return next(err);}
       if(exists){
         console.log("error: USER EXISTS");//todo
-         res.status(422);
-          return  res.send({ error: 'username already is in use' });
+        res.status(422);
+         return res.send({ error: 'Email is in use' });
       }
 
       const newUser = new User({
         username: username,
-        password: password
+        password: password,
+        email:email
       })
 
       newUser.save(function(err){
           if(err){return next(err);}
-
           res.json({success:true, token: getToken(newUser),username:newUser.username})
       })
     })

@@ -10,8 +10,8 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-const store = createStoreWithMiddleware(enableBatching(reducers));
+const rootReducer = enableBatching(reducers)
+const store = createStore(rootReducer,applyMiddleware(thunk));
 
 injectTapEventPlugin();
 

@@ -6,14 +6,8 @@ const userSchema = new Schema({
   username: { type: String, unique: true, lowercase: true },
   password: String,
   email: String,
-  fullname:{
-    first:String,
-    last: String,
-    mi:String
-  },
   Address:{
-    street1: String,
-    street2: String,
+    street: String,
     city: String,
     state:String,
     zip:String

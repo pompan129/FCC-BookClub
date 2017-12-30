@@ -1,8 +1,9 @@
 import React from "react";
 import {Link} from 'react-router-dom';
-import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar';
-import RaisedButton from 'material-ui/RaisedButton';
-import {grey800,grey100,lightGreen500} from 'material-ui/styles/colors';
+import Toolbar from 'material-ui/Toolbar';
+import AppBar from 'material-ui/AppBar';
+import Button from 'material-ui/Button';
+import { grey, lightGreen,lightBlue } from 'material-ui/colors';
 import logo from "../assets/logo.png";
 
 
@@ -10,47 +11,50 @@ import logo from "../assets/logo.png";
 const Navbar = (props)=>{
   const styles = {
     button: {
-      margin: 1
+      margin: 1,
+      backgroundColor:lightGreen[500]
     },
     h_two:{
-      color:grey100,
+    color:grey[100],
     'margin-left':25
     },
     toolbar:{
-      backgroundColor: grey800
+      backgroundColor: grey[800]
     },
     img:{
-      'margin-left': '1em'
+      marginLeft: '1em'
     },
     seperator:{  /**/
       'height':'100%',
-      'margin-right':'15px',
+      marginRight:'15px',
       backgroundColor:'rgba(100,100,100,.25)',
       width:'2px'
     },
     link:{
-    'text-decoration': 'none',
+    textDecoration: 'none',
     color:'white',
-    'font-size':'1.5em'
+    fontSize:'1.5em'
     }
   };
 
-  return (/*<FontIcon className="muidocs-icon-custom-sort" />*/
-    <Toolbar style={styles.toolbar}>
-        <ToolbarGroup firstChild={true} >
-          <Link to="/"><img src={logo} alt="Book Borrow logo" style={styles.img}/></Link>
-        </ToolbarGroup>
+  return (/*<FontIcon className="muidocs-icon-custom-sort" />*///todo
 
-        <ToolbarGroup>
+    <AppBar>
+      <Toolbar style={styles.toolbar}>
+          <Link to="/"><img src={logo} alt="Book Borrow logo" style={styles.img}/></Link>
           <Link to="/about"  style={styles.link}>About</Link>
-          <ToolbarSeparator style={styles.seperator} />
-          {props.authenticated && <RaisedButton label="SignUp"
+          {!props.authenticated && <Button label="SignUp"
             onClick={()=>{props.renderModal(true,'signup')}}
-            style={styles.button}
-            backgroundColor={lightGreen500}/>}
-          {props.authenticated && <RaisedButton label="Login" backgroundColor={lightGreen500}/>}
-        </ToolbarGroup>
-      </Toolbar>
+            style={styles.button}>Sign Up</Button>}
+          {!props.authenticated && <Button label="Login"
+            onClick={()=>{props.renderModal(true,'signin')}}
+            style={styles.button}>Login</Button>}
+          {props.authenticated && <Button label="Logout"
+            onClick={props.logout}
+            style={styles.button}>Logout</Button>}
+        </Toolbar>
+    </AppBar>
+
   )
 }
 

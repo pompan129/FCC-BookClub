@@ -1,45 +1,120 @@
 import React from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import Dialog,
+      {DialogTitle,
+       DialogContent,
+       DialogActions} from 'material-ui/Dialog';
+import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
+import TextField from 'material-ui/TextField';
+import { renderModal,signup} from '../actions';
 
-export default class SignUpModal extends React.Component {
-  state = {
-    open: this.props.visible && (this.props.modal_type === 'signup'),
-  };
+class SignUpModal extends React.Component {
+  constructor(props){
+     super(props);
+     this.state = {
+      error: ``,
+      username:'',
+      password:'',
+      email:'',
+      street:'',
+      city:'',
+      state:'',
+      zip:''
+    };
+     this.handleSubmit = this.handleSubmit.bind(this);
+     this.handleInputChange = this.handleInputChange.bind(this);
+   }
 
-  handleOpen = () => {
-    this.setState({open: true});
-  };
+   handleSubmit(event){
+      event.preventDefault();
+      this.props.renderModal(false,'');
+      const {username,password,email} = this.state;
+      this.props.signup(username,password,email,()=>{
+        this.setState({
+         error: ``,
+         username:'',
+         password:'',
+         email:'',
+         street:'',
+         city:'',
+         state:'',
+         zip:''
+       })
+      });
+  }
 
-  handleClose = () => {
-    this.setState({open: false});
-  };
+  handleInputChange(fieldname){
+    return (event)=>{
+      event.preventDefault();
+      this.setState({[fieldname]:event.target.value})
+    }
+  }
+
 
   render() {
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onClick={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onClick={this.handleClose}
-      />,
-    ];
+    console.log("SignUpModal", this.props,this.state, this.props.modal.visible && (this.props.modal.modal_type === 'signup'));//todo
+    const open = this.props.modal.visible && (this.props.modal.modal_type === 'signup');
 
     return (
-        <Dialog
-          title="Signup"
-          actions={actions}
-          modal={false}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
-        >
-          This is the signUp modal
-        </Dialog>
+      <Dialog open={open}>
+        <DialogTitle>This is the signUp modal</DialogTitle>
+        <DialogContent>
+          <TextField
+          id="username"
+          label="username"
+          value={this.state.username}
+          onChange={this.handleInputChange("username")}
+          margin="normal"
+        /><br/>
+        <TextField
+          id="password"
+          label="password"
+          type="password"
+          value={this.state.password}
+          onChange={this.handleInputChange("password")}
+          margin="normal"
+        /><br/>
+        <TextField
+          id="email"
+          label="email"
+          value={this.state.email}
+          onChange={this.handleInputChange("email")}
+          margin="normal"
+        /><br/>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleSubmit}>Submit</Button>
+          <Button onClick={()=>this.props.renderModal(false,'')}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
     );
   }
 }
+
+function mapStateToProps({modal,user}){
+    return {modal,user}
+}
+
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(
+      { renderModal,signup
+      }, dispatch);
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(SignUpModal);
+
+
+/*
+username: { type: String, unique: true, lowercase: true },
+password: String,
+email: String,
+Address:{
+  street: String,
+  city: String,
+  state:String,
+  zip:String
+}
+*/
