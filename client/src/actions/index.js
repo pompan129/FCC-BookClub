@@ -53,17 +53,29 @@ export const setUsername = (name)=>{
     }
 }
 
-//login user
-export const signin = (username,password)=>{
-  console.log('action:signin');//todo
-  const batch = [];
-  batch.push(setAuthentication(true));
-  batch.push(setUsername(username));//todo
-  batch.push(renderModal(false,''));
-  return batchActions(batch);
+//login user --a thunk
+export const signin = (username,password,successCallback)=>{
+  console.log('action:signin(1)');//todo
+  return (dispatch,getstate)=>{
+    Axios.post('/api/user/signin',{username,password})
+      .then((resp)=>{
+        console.log('action:signin',resp);//todo
+        const batch = [];
+        batch.push(setAuthentication(true));
+        batch.push(setUsername(username));//todo
+        batch.push(renderModal(false,''));
+        localStorage.setItem('jwt', resp.data.token);//JWT in localstorage for protected routes
+        dispatch(batchActions(batch));
+        successCallback();
+      })
+      .catch((err)=>{
+        console.log("signin", err.response.data.error);//todo
+        dispatch(setAuthenticationError(err.response.data.error));
+      })
+  }
 }
 
-//a thunk
+//signup user --a thunk
 export const signup = (username,password,email,successCallback)=>{
   return (dispatch,getstate)=>{
     console.log('action:signup');//todo
@@ -75,6 +87,7 @@ export const signup = (username,password,email,successCallback)=>{
         batch.push(setAuthentication(true));
         batch.push(setUsername(username));//todo
         batch.push(renderModal(false,''));
+        localStorage.setItem('jwt', resp.data.token);//JWT in localstorage for protected routes
         dispatch(batchActions(batch));
       })
       .catch((err)=>{
@@ -90,5 +103,6 @@ export const logout=()=>{
   const batch = [];
   batch.push(setAuthentication(false));
   batch.push(setUsername(""));
+  localStorage.setItem('jwt','');//JWT in localstorage for protected routes
   return batchActions(batch);
 }

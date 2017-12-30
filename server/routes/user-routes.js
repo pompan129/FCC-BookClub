@@ -19,7 +19,6 @@ module.exports = function(app){
   //signup user
   app.post('/api/user/signup', Authenticate.signup);
 
-
   //signin user
   app.post('/api/user/signin', authenticateLocal, Authenticate.signin);
 

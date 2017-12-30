@@ -14,6 +14,7 @@ class SignUpModal extends React.Component {
   constructor(props){
      super(props);
      this.state = {
+      open:props.modal.visible && (props.modal.modal_type == 'signup'),
       error: ``,
       username:'',
       password:'',
@@ -27,6 +28,10 @@ class SignUpModal extends React.Component {
      this.handleInputChange = this.handleInputChange.bind(this);
    }
 
+   componentWillReceiveProps(nextProps){
+     this.setState({open:nextProps.modal.visible && (nextProps.modal.modal_type == 'signup'),})
+   }
+
    handleSubmit(event){
       event.preventDefault();
       this.props.renderModal(false,'');
@@ -37,7 +42,7 @@ class SignUpModal extends React.Component {
          username:'',
          password:'',
          email:'',
-         street:'',
+         street:'',//todo needed??
          city:'',
          state:'',
          zip:''
@@ -55,10 +60,10 @@ class SignUpModal extends React.Component {
 
   render() {
     console.log("SignUpModal", this.props,this.state, this.props.modal.visible && (this.props.modal.modal_type === 'signup'));//todo
-    const open = this.props.modal.visible && (this.props.modal.modal_type === 'signup');
 
     return (
-      <Dialog open={open}>
+      <Dialog open={this.state.open}
+        onClose={()=>{this.props.renderModal(false,'')}}>
         <DialogTitle>This is the signUp modal</DialogTitle>
         <DialogContent>
           <TextField

@@ -45,7 +45,6 @@ exports.signin = function(req, res, next){
 }
 
 exports.JWTauth = function(req, res, next){
-console.log("here(1):");//todo
 
   let token = req.headers['authorization'];
   if (!token) return next(); //if no token, continue
