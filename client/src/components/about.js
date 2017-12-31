@@ -1,13 +1,20 @@
 import React from "react";
+import Root from "./root-page";
+
 
 
 
 const About = (props)=>{
 
   return(
-    <div className="about">
-      ABOUT
-    </div>
+    <Root name="about-root"
+      title="About"
+      subtitle=""
+      >
+      <div className="about">
+        ABOUT
+      </div>
+    </Root>
   )
 }
 

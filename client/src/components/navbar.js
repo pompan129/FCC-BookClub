@@ -11,29 +11,22 @@ import logo from "../assets/logo.png";
 const Navbar = (props)=>{
   const styles = {
     button: {
-      margin: 1,
+      margin: '0 .25em',
       backgroundColor:lightGreen[500]
     },
-    h_two:{
-    color:grey[100],
-    'margin-left':25
-    },
     toolbar:{
-      backgroundColor: grey[800]
+      backgroundColor: grey[800],
+      justifyContent:'space-between'
     },
     img:{
-      marginLeft: '1em'
-    },
-    seperator:{  /**/
-      'height':'100%',
-      marginRight:'15px',
-      backgroundColor:'rgba(100,100,100,.25)',
-      width:'2px'
+      margin: '0 0 0 1.5em',
+      flex: 1
     },
     link:{
     textDecoration: 'none',
     color:'white',
-    fontSize:'1.5em'
+    margin:'0 .5em',
+    fontSize:'1.25em'
     }
   };
 
@@ -42,16 +35,21 @@ const Navbar = (props)=>{
     <AppBar>
       <Toolbar style={styles.toolbar}>
           <Link to="/"><img src={logo} alt="Book Borrow logo" style={styles.img}/></Link>
-          <Link to="/about"  style={styles.link}>About</Link>
-          {!props.authenticated && <Button label="SignUp"
-            onClick={()=>{props.renderModal(true,'signup')}}
-            style={styles.button}>Sign Up</Button>}
-          {!props.authenticated && <Button label="Login"
-            onClick={()=>{props.renderModal(true,'signin')}}
-            style={styles.button}>Login</Button>}
-          {props.authenticated && <Button label="Logout"
-            onClick={props.logout}
-            style={styles.button}>Logout</Button>}
+          <div>
+            <Link to="/about"  style={styles.link}>About</Link>
+            <Link to="/browse"  style={styles.link}>Browse Books</Link>
+            {props.authenticated &&
+                <Link to="/dashboard"  style={styles.link}>Profile</Link>}
+            {!props.authenticated && <Button label="SignUp"
+              onClick={()=>{props.renderModal(true,'signup')}}
+              style={styles.button}>Sign Up</Button>}
+            {!props.authenticated && <Button label="Login"
+              onClick={()=>{props.renderModal(true,'signin')}}
+              style={styles.button}>Login</Button>}
+            {props.authenticated && <Button label="Logout"
+              onClick={props.logout}
+              style={styles.button}>Logout</Button>}
+          </div>
         </Toolbar>
     </AppBar>
 

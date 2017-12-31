@@ -8,7 +8,7 @@ const bookSchema = new Schema({
     publishedDate:String,
     description:String,
     selfLink:String,//link to goole books
-    thumbNail:String,
+    thumbnail:String,
     owner:String,//user who owns the book
     isbn13:String,
     rq_status:{

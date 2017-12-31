@@ -1,13 +1,17 @@
 import React from "react";
-
+import Root from "./root-page";
 
 
 const DashBoard = (props)=>{
-
   return(
-    <div className="about">
-      DashBoard
-    </div>
+    <Root name="dashboard-root"
+      title="Profile"
+      subtitle=""
+      >
+      <div className="dashboard">
+        DashBoard
+      </div>
+    </Root>
   )
 }
 

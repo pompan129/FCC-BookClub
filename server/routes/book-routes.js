@@ -20,7 +20,7 @@ module.exports = function(app){
             q,
             key: env.GOOGLE_API_KEY,
             startIndex: "0",
-            maxResults: "10",
+            maxResults: "12",
             projection:"lite"
           }
         },(error, response, body)=>{
@@ -80,6 +80,8 @@ module.exports = function(app){
         authors,title,publisher,publishedDate,
           description,selfLink,thumbnail, owner, rq_status:{rq_state:"available"}
       })
+      console.log("add/remove book:  ",authors,title,publisher,publishedDate,
+        description,selfLink,thumbnail, owner)
 
       newBook.save(function (err,book) {
         if (err) {

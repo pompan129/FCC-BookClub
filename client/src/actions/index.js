@@ -4,15 +4,19 @@ import Axios from "axios";
 export const BATCH_ACTIONS = "BATCH_ACTIONS";
 export const SET_AUTHENTICATION = "SET_AUTHENTICATION";
 export const SET_USERNAME = "SET_USERNAME";
+export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
+export const AUTH_JWT = "AUTH_JWT";
+export const LOGIN_USER_JWT = "LOGIN_USER_JWT";
 export const LOG_OUT = "LOG_OUT";//todo needed?
 export const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 export const FETCHING_START = "FETCHING_START";
 export const FETCHING_DONE = "FETCHING_DONE";
-export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
-export const AUTH_JWT = "AUTH_JWT";
-export const LOGIN_USER_JWT = "LOGIN_USER_JWT";
+export const SET_BOOKS = "SET_BOOKS";
+export const SET_BOOKS_ERROR = "SET_BOOKS_ERROR";
+export const SET_HEADER_MESSAGE = "SET_HEADER_MESSAGE";
 export const RENDER_MODAL="RENDER_MODAL";
 export const TEST="TEST";
+
 
 
 //action to complete multiple actions with only one call to dispatch/render
@@ -42,6 +46,14 @@ export const renderModal = (visible, modal_type)=>{
   return {
       type: RENDER_MODAL,
       payload: {modal_type,visible}
+   }
+}
+
+//message actions
+export const setHeaderMessage = (message)=>{
+  return {
+      type: SET_HEADER_MESSAGE,
+      payload: message
    }
 }
 
@@ -105,4 +117,39 @@ export const logout=()=>{
   batch.push(setUsername(""));
   localStorage.setItem('jwt','');//JWT in localstorage for protected routes
   return batchActions(batch);
+}
+
+
+//book actions----------------------
+
+export const setBooks=(books)=>{
+  console.log('setBooks', books);//todo
+  return {
+      type: SET_BOOKS,
+      payload: books
+   }
+}
+
+export const  setBooksError=(error)=>{
+  console.log('setBooksError', error);//todo
+  return {
+      type: SET_BOOKS_ERROR,
+      payload: error
+   }
+}
+
+//a thunk
+export const fetchBooks = ()=>{
+  return (dispatch, getState) => {
+      Axios.get('/api/booklist/list')
+        .then((resp)=>{
+            console.log("fetchBooks", resp.data);//todo
+            dispatch(setBooks(resp.data))
+        })
+        .catch((err)=>{
+          console.log("fetchBooks", err.response.data.error);//todo
+          dispatch(setBooksError(err.response.data.error));
+        })
+  }
+
 }

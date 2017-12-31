@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import NavBar from './components/navbar';
 import About from './components/about';
+import BookList from './components/book-list';
 import Home from './components/home';
 import DashBoard from './components/dashboard';
 import SignUpModal from './components/signup';
@@ -14,7 +15,8 @@ import blue from 'material-ui/colors/blue';
 import green from 'material-ui/colors/green';
 import red from 'material-ui/colors/red';
 import { renderModal,
-        logout
+        logout,
+        setHeaderMessage
   } from './actions';
 import './App.css';
 
@@ -28,8 +30,16 @@ const theme = createMuiTheme({
   },
 });
 
+const homeMessage = {
+  title:"Book Borrow",
+  sub:"Go ahead and borrow a book. I dare you!"
+}
+
+
 
 class App extends Component {
+
+
   render() {
     console.log("App","p:",this.props,"s:",this.state)
     return (
@@ -38,15 +48,12 @@ class App extends Component {
           <NavBar authenticated={this.props.user.authenticated}
               renderModal={this.props.renderModal}
               logout={this.props.logout}></NavBar>
-          <header className="App-header" >
-              <div className="App-title-container">
-                <h1 className="App-title">Book Borrow</h1>
-                <h2>Go ahead and borrow a book. I dare you!</h2>
-              </div>
-          </header>
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path='/'
+              render={()=><Home
+                setHeaderMessage={()=>this.props.setHeaderMessage(homeMessage)}/>} />
             <Route path='/about' component={About} />
+            <Route path='/browse' component={BookList} />
             <Route path='/DashBoard' component={DashBoard} />
           </Switch>
           <SignUpModal />
@@ -58,14 +65,14 @@ class App extends Component {
 }
 
 
-function mapStateToProps({modal,user}){
-    return {modal,user}
+function mapStateToProps({modal,user,books,message}){//todo all needed?
+    return {modal,user,books,message}
 }
 
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      { renderModal,logout
+      { renderModal,logout,setHeaderMessage
       }, dispatch);
 }
 
