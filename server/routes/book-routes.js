@@ -13,6 +13,8 @@ module.exports = function(app){
     //retrieve books from Google API
     app.get('/api/search/books',(req,res)=>{
         let {q} = req.query; //query string from user
+        console.log("search",q,req.query);//todo
+        if(!q){return res.end();}
 
         request.get({
           url:'https://www.googleapis.com/books/v1/volumes',
@@ -28,7 +30,7 @@ module.exports = function(app){
           return res.send(500, { message: error.message});
           }
 
-          //console.log( JSON.parse(body));//todo
+          console.log( JSON.parse(body));//todo
 
           const books = JSON.parse(body).items.map((book)=>{
             const {selfLink} = book;

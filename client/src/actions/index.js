@@ -11,7 +11,9 @@ export const LOG_OUT = "LOG_OUT";//todo needed?
 export const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 export const FETCHING_START = "FETCHING_START";
 export const FETCHING_DONE = "FETCHING_DONE";
+export const SEARCH_BOOKS = "SEARCH_BOOKS";
 export const SET_BOOKS = "SET_BOOKS";
+export const SET_SEARCH_RESULT = "SET_SEARCH_RESULT";
 export const SET_BOOKS_ERROR = "SET_BOOKS_ERROR";
 export const SET_HEADER_MESSAGE = "SET_HEADER_MESSAGE";
 export const RENDER_MODAL="RENDER_MODAL";
@@ -138,7 +140,7 @@ export const  setBooksError=(error)=>{
    }
 }
 
-//a thunk
+//get all books from DB --a thunk
 export const fetchBooks = ()=>{
   return (dispatch, getState) => {
       Axios.get('/api/booklist/list')
@@ -148,6 +150,30 @@ export const fetchBooks = ()=>{
         })
         .catch((err)=>{
           console.log("fetchBooks", err.response.data.error);//todo
+          dispatch(setBooksError(err.response.data.error));
+        })
+  }
+
+}
+
+export const setSearchResult=(books)=>{
+  console.log('setSearchResult', books);//todo
+  return {
+      type: SET_SEARCH_RESULT,
+      payload: books
+   }
+}
+
+export const searchBooks = (query)=>{
+  console.log("searchBooks: ",query);//todo
+  return (dispatch, getState) => {
+      Axios.get('/api/search/books',{params:{q:query}})
+        .then((resp)=>{
+            console.log("searchBooks", resp.data);//todo
+            dispatch(setSearchResult(resp.data))
+        })
+        .catch((err)=>{
+          console.log("searchBooks", err.response.data.error);//todo
           dispatch(setBooksError(err.response.data.error));
         })
   }
