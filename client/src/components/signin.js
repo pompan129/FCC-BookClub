@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Dialog,
       {DialogTitle,
        DialogContent,
-       DialogActions} from 'material-ui/Dialog';import { withStyles } from 'material-ui/styles';
+       DialogActions} from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import { renderModal,signin} from '../actions';
@@ -13,7 +13,7 @@ class SignInModal extends React.Component {
   constructor(props){
      super(props);
      this.state = {
-      open:props.modal.visible && (props.modal.modal_type == 'signin'),
+      open:props.modal.visible && (props.modal.modal_type === 'signin'),
       error: ``,
       username:'',
       password:'',
@@ -22,12 +22,12 @@ class SignInModal extends React.Component {
    }
 
    componentWillReceiveProps(nextProps){
-     this.setState({open:nextProps.modal.visible && (nextProps.modal.modal_type == 'signin'),})
+     this.setState({open:nextProps.modal.visible && (nextProps.modal.modal_type === 'signin'),})
    }
 
    handleSubmit(event){
       event.preventDefault();
-      const {username,password,email} = this.state;
+      const {username,password} = this.state;
       this.props.signin(username,password,()=>{
         this.setState({
          error: ``,
@@ -46,8 +46,8 @@ class SignInModal extends React.Component {
 
 
   render() {
-    console.log("SignInModal", this.props,this.state, this.props.visible &&
-      (this.props.modal_type == 'signin'));//todo
+    //console.log("SignInModal", this.props,this.state, this.props.visible &&
+      //(this.props.modal_type == 'signin'));//todo
     //const open = this.props.modal.visible && (this.props.modal.modal_type == 'signin')
 
     return (

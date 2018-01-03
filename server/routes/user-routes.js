@@ -22,10 +22,19 @@ module.exports = function(app){
   //signin user
   app.post('/api/user/signin', authenticateLocal, Authenticate.signin);
 
-  //user page refresh (verify token)
+  //user page refresh (verify token) todo: error handling
   app.get('/api/user/auth/refresh/jwt',authenticateJWT,(req,resp)=>{
-    resp.send({msg:"success", username:req.user.username});
+    //resp.send({msg:"success", username:req.user.username}); //todo
+    User.where({ username: req.user.username}).select({ password: 0}).exec(
+      function (err, users) {
+        if(users.length > 1){console.log("ERROR: duplicate username", Date.now())}
+        console.log("auth/refresh/jwt:",users);///todo
+
+        resp.send({msg:"success", user:users[0]});
+      });
   })
+
+
 
   //update user info
   app.post('/api/user/update',Authenticate.JWTauth,(req,resp)=>{

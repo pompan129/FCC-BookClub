@@ -1,17 +1,18 @@
-import {SET_HEADER_MESSAGE} from "../actions";
+import {SET_HEADER_MESSAGE,FETCHING_START,FETCHING_DONE} from "../actions";
 
 const defaultState = {
-  header:{
-    title:"Book Borrow",
-    sub:"Go ahead and borrow a book. I dare you!"
-    }
+    fetching:0
   }
 
 export default function (state=defaultState, action) {
-  console.log("modalReducer", action);//todo
+  console.log("msgReducer", action,"state:",state);//todo
     switch (action.type) {
         case SET_HEADER_MESSAGE:
           return {...state,header:action.payload};
+        case FETCHING_START:
+          return {...state,fetching:(state.fetching +1)};
+        case FETCHING_DONE:
+          return {...state,fetching:(state.fetching -1)};
         default:
           return state;
     }

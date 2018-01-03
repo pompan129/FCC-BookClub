@@ -1,15 +1,32 @@
 import React from "react";
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import RootPage from "./root-page";
-import Test from "./test";//todo
 import AddBookPanel from "./dash-panel-addbook";//todo
 import Tabs, { Tab } from 'material-ui/Tabs';
 import TabContainer from './tab-container';
-import AppBar from 'material-ui/AppBar';//todo
 import Divider from 'material-ui/Divider';
-import Icon from 'material-ui/Icon';
+import Button from 'material-ui/Button';
 import FavoriteIcon from 'material-ui-icons/Favorite';
+import EditIcon from 'material-ui-icons/Edit';
 import AddCircleIcon from 'material-ui-icons/AddCircle';
 import Badge from 'material-ui/Badge';
+import Typography from 'material-ui/Typography';
+
+
+const styles = {
+  profile:{
+    margin:'1em 0 0 2.5rem'
+  },
+  tabsContainer:{
+    margin:'1rem'
+  },
+  tabs:{
+    margin:'.5rem'
+  }
+}
+
+
 
 
 class DashBoard extends React.Component {
@@ -24,19 +41,23 @@ class DashBoard extends React.Component {
 
   render(){
     const { value } = this.state;
-    const testValue = 22;
+    const {username,email,book_ids,wishlist} = this.props.user;
 
     return(
-      <RootPage name="dashboard-root"
+      <RootPage name="dashboard-root" fetching={this.props.message.fetching}
         title="Profile"
         subtitle=""
         >
-        <div>
-          profile info
+        <div className="dashboard-profile" style={styles.profile}>
+          {username && <Typography type="display3" align="left">{username}</Typography>}
+          {email && <Typography type="title" align="left">{email}</Typography>}
+          <Button raised color="accent">
+            <EditIcon />
+          </Button>
         </div>
-        <div>
-            <Tabs value={value} onChange={this.handleChange}>
-              <Tab label="Add Book" icon={<Badge badgeContent={4}/>}/>
+        <div className="tabs-container" style={styles.tabsContainer}>
+            <Tabs value={value} onChange={this.handleChange} style={styles.tabs}>
+              <Tab label="Add Book" icon={<AddCircleIcon/>}/>
               <Tab label="Your Books" />
               <Tab label="Wishlist" icon={
                   <Badge badgeContent={4} color="primary">
@@ -60,4 +81,18 @@ class DashBoard extends React.Component {
   }
 }
 
-export default DashBoard;
+function mapStateToProps({books,user,message}){
+    return {
+      books:books.searchResult,
+      message,
+      user
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(
+      {}, dispatch);
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(DashBoard)

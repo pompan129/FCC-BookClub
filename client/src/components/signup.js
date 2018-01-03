@@ -5,7 +5,6 @@ import Dialog,
       {DialogTitle,
        DialogContent,
        DialogActions} from 'material-ui/Dialog';
-import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import { renderModal,signup} from '../actions';
@@ -14,7 +13,7 @@ class SignUpModal extends React.Component {
   constructor(props){
      super(props);
      this.state = {
-      open:props.modal.visible && (props.modal.modal_type == 'signup'),
+      open:props.modal.visible && (props.modal.modal_type === 'signup'),
       error: ``,
       username:'',
       password:'',
@@ -29,7 +28,7 @@ class SignUpModal extends React.Component {
    }
 
    componentWillReceiveProps(nextProps){
-     this.setState({open:nextProps.modal.visible && (nextProps.modal.modal_type == 'signup'),})
+     this.setState({open:nextProps.modal.visible && (nextProps.modal.modal_type === 'signup'),})
    }
 
    handleSubmit(event){
@@ -59,7 +58,7 @@ class SignUpModal extends React.Component {
 
 
   render() {
-    console.log("SignUpModal", this.props,this.state, this.props.modal.visible && (this.props.modal.modal_type === 'signup'));//todo
+    //console.log("SignUpModal", this.props,this.state, this.props.modal.visible && (this.props.modal.modal_type === 'signup'));//todo
 
     return (
       <Dialog open={this.state.open}

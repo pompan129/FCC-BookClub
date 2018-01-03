@@ -18,7 +18,7 @@ const styles = {
 class AddBookPanel extends React.Component {
 
   state = {
-    term: 'x'
+    term: ''
   };
 
   handleChange = (event) => {

@@ -4,6 +4,7 @@ import Axios from "axios";
 export const BATCH_ACTIONS = "BATCH_ACTIONS";
 export const SET_AUTHENTICATION = "SET_AUTHENTICATION";
 export const SET_USERNAME = "SET_USERNAME";
+export const SET_USER = "SET_USER";
 export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
 export const AUTH_JWT = "AUTH_JWT";
 export const LOGIN_USER_JWT = "LOGIN_USER_JWT";
@@ -29,6 +30,38 @@ export const  batchActions = (actions)=>{
    }
 }
 
+
+//Auth Actions-------------------------------------------
+
+//check JWT authentication on page refresh --a thunk
+export const authRefreshJWT = (token)=>{
+  //console.log("authRefreshJWT:   ",token);//todo
+  return (dispatch, getState) => {
+
+    if(!token){
+      dispatch(batchActions([setUsername(""), setAuthentication(false)]));
+    }
+
+    //start spinner
+    dispatch(fecthStart());
+
+    //verify token w API
+    Axios.get('/api/user/auth/refresh/jwt',{params:{token}, headers:{"Authorization":"Bearer " + token}})
+      .then((resp)=>{
+        //console.log("authRefreshJWT,success>   ",resp.data);//todo
+        dispatch(batchActions([setUser(resp.data.user), setAuthentication(true),
+          renderModal(false),fecthDone()]));
+        localStorage.setItem("jwt",token);
+      })
+      .catch(function (error){
+          console.log("authRefreshJWT,error>   ",error);//todo
+          dispatch(batchActions([setUsername(""), setAuthentication(false),
+            setAuthenticationError(error.message),fecthDone()]));
+
+        });
+  }
+}
+
 export const setAuthentication = (auth)=>{
   return {
       type: SET_AUTHENTICATION,
@@ -51,7 +84,8 @@ export const renderModal = (visible, modal_type)=>{
    }
 }
 
-//message actions
+
+//message actions------------------------------------------
 export const setHeaderMessage = (message)=>{
   return {
       type: SET_HEADER_MESSAGE,
@@ -59,18 +93,39 @@ export const setHeaderMessage = (message)=>{
    }
 }
 
-//user actions----------------------
-export const setUsername = (name)=>{
+export const fecthStart = ()=>{
+  console.log("FETCHING_START");//todo
+  return{type:FETCHING_START}
+}
+
+export const fecthDone = ()=>{
+  console.log("FETCHING_DONE");//todo
+  return{type:FETCHING_DONE}
+}
+
+
+//user actions----------------------------------------------
+export const setUsername = (name)=>{//todo needed?
   return {
       type: SET_USERNAME,
       payload: name
     }
 }
 
+export const setUser = (user)=>{
+  return {
+      type: SET_USER,
+      payload: user
+    }
+}
+
 //login user --a thunk
 export const signin = (username,password,successCallback)=>{
-  console.log('action:signin(1)');//todo
+
   return (dispatch,getstate)=>{
+
+    dispatch(fecthStart());//start spinner
+
     Axios.post('/api/user/signin',{username,password})
       .then((resp)=>{
         console.log('action:signin',resp);//todo
@@ -78,6 +133,7 @@ export const signin = (username,password,successCallback)=>{
         batch.push(setAuthentication(true));
         batch.push(setUsername(username));//todo
         batch.push(renderModal(false,''));
+        batch.push(fecthDone());
         localStorage.setItem('jwt', resp.data.token);//JWT in localstorage for protected routes
         dispatch(batchActions(batch));
         successCallback();
@@ -92,7 +148,9 @@ export const signin = (username,password,successCallback)=>{
 //signup user --a thunk
 export const signup = (username,password,email,successCallback)=>{
   return (dispatch,getstate)=>{
-    console.log('action:signup');//todo
+
+    dispatch(fecthStart());//start spinner
+
     Axios.post('/api/user/signup',{username,password,email})
       .then((resp)=>{
         console.log("signup",resp);
@@ -101,6 +159,7 @@ export const signup = (username,password,email,successCallback)=>{
         batch.push(setAuthentication(true));
         batch.push(setUsername(username));//todo
         batch.push(renderModal(false,''));
+        batch.push(fecthDone());
         localStorage.setItem('jwt', resp.data.token);//JWT in localstorage for protected routes
         dispatch(batchActions(batch));
       })
@@ -122,7 +181,7 @@ export const logout=()=>{
 }
 
 
-//book actions----------------------
+//book actions------------------------------------------------
 
 export const setBooks=(books)=>{
   console.log('setBooks', books);//todo
@@ -143,10 +202,13 @@ export const  setBooksError=(error)=>{
 //get all books from DB --a thunk
 export const fetchBooks = ()=>{
   return (dispatch, getState) => {
+
+      dispatch(fecthStart());//start spinner
+
       Axios.get('/api/booklist/list')
         .then((resp)=>{
             console.log("fetchBooks", resp.data);//todo
-            dispatch(setBooks(resp.data))
+            dispatch(batchActions([setBooks(resp.data),fecthDone()]));
         })
         .catch((err)=>{
           console.log("fetchBooks", err.response.data.error);//todo
@@ -167,15 +229,25 @@ export const setSearchResult=(books)=>{
 export const searchBooks = (query)=>{
   console.log("searchBooks: ",query);//todo
   return (dispatch, getState) => {
+
+      dispatch(fecthStart());//start spinner
+
       Axios.get('/api/search/books',{params:{q:query}})
         .then((resp)=>{
             console.log("searchBooks", resp.data);//todo
-            dispatch(setSearchResult(resp.data))
+            dispatch(batchActions([setSearchResult(resp.data),fecthDone()]));
         })
         .catch((err)=>{
           console.log("searchBooks", err.response.data.error);//todo
-          dispatch(setBooksError(err.response.data.error));
+          dispatch(batchActions([setBooksError(err.response.data.error),fecthDone()]));
         })
   }
 
+}
+
+//a thunk
+export const requestTrade = (user,bookID)=>{
+  return (dispatch, getState) => {
+
+  }
 }

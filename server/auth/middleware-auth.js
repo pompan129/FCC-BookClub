@@ -33,16 +33,20 @@ exports.signup = function(req, res, next){
         email:email
       })
 
-      newUser.save(function(err){
+      newUser.save(function(err,user){
           if(err){return next(err);}
-          res.json({success:true, token: getToken(newUser),username:newUser.username})
+          res.json({success:true, token: getToken(newUser),user})
       })
     })
 }
 
 exports.signin = function(req, res, next){
-  res.json({success:true, token: getToken(req.user),username:req.user.username})
+  const user = req.user;
+  user.password = undefined;
+  res.json({success:true, token: getToken(req.user),user})
 }
+
+
 
 exports.JWTauth = function(req, res, next){
 

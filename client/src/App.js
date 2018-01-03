@@ -16,7 +16,8 @@ import green from 'material-ui/colors/green';
 import red from 'material-ui/colors/red';
 import { renderModal,
         logout,
-        setHeaderMessage
+        setHeaderMessage,
+        authRefreshJWT
   } from './actions';
 import './App.css';
 
@@ -39,9 +40,17 @@ const homeMessage = {
 
 class App extends Component {
 
+  //test JWT on page refresh
+  componentWillMount() {
+    const token = localStorage.getItem("jwt");
+      if(!this.props.user.authenticated && token){
+        localStorage.setItem("jwt","");
+        this.props.authRefreshJWT(token);
+      }
+  }
 
   render() {
-    console.log("App","p:",this.props,"s:",this.state)
+    console.log("App","p:",this.props,"s:",this.state);//todo
     return (
       <MuiThemeProvider theme={theme}>
         <div className="App">
@@ -72,7 +81,7 @@ function mapStateToProps({modal,user,books,message}){//todo all needed?
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      { renderModal,logout,setHeaderMessage
+      { renderModal,logout,setHeaderMessage,authRefreshJWT
       }, dispatch);
 }
 
