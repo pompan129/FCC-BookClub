@@ -52,33 +52,37 @@ const styles = {
 
 const BookCard = (props)=>{
   //console.log("BookCard", props);//todo
-  const { classes } = props;
+  const { classes,footer,authors,publisher,publishedDate,
+    thumbnail,title,footerText,footerAction} = props;
+    const id = props._id || props.selfLink;
 
   return(
     <div className="book-card">
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}
-          image={props.thumbnail}
+          image={thumbnail}
           title="Book Thumbnail"
         />
         <CardHeader
-          title={props.title}
+          title={title}
+        subheader={""}
           classes={{title:classes.title,
             root:classes.headerRoot,subheader:classes.subheader}}
         />
         <CardContent className={classes.content}>
-          <Typography type="caption">by: {props.authors}</Typography> {/*todo put in commas*/}
-          <Typography type="caption">{props.publisher}</Typography>
-          <Typography type="caption">{props.publishedDate}</Typography>
+          <Typography type="caption">by: {authors}</Typography> {/*todo put in commas*/}
+          <Typography type="caption">{publisher || '--'}</Typography>
+          <Typography type="caption">{publishedDate || '--'}</Typography>
         </CardContent>
         <Divider light />
         <CardActions disableActionSpacing={true} className={classes.actions}>
           <div className={classes.footer}
-            onMouseOver={({target})=>{props.footer?target.style.backgroundColor = props.footer.colorOver:""}}
-            onMouseOut={({target})=>{props.footer?target.style.backgroundColor = props.footer.colorOut:""}}
+            onMouseOver={({target})=>{footer?target.style.backgroundColor = footer.colorOver:""}}
+            onMouseOut={({target})=>{footer?target.style.backgroundColor = footer.colorOut:""}}
+            onClick={()=>footerAction(id)}
             >
-            <span>{props.footerText}</span>
+            <span>{footer && footer.text}</span>
           </div>
         </CardActions>
       </Card>

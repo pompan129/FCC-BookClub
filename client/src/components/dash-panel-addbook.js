@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Book from "./book-card";
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
-import {searchBooks} from '../actions';
+import {searchBooks,addBook} from '../actions';
 
 const styles = {
   listPanel:{
@@ -14,11 +14,10 @@ const styles = {
 }
 
 
-
 class AddBookPanel extends React.Component {
 
   state = {
-    term: ''
+    term: '',
   };
 
   handleChange = (event) => {
@@ -30,6 +29,18 @@ class AddBookPanel extends React.Component {
     const {term} = this.state;
     this.props.searchBooks(term);
   };
+
+  getBookPanelOptions = (book)=>{
+    const {user} = this.props;
+    const options ={
+      footer:{
+        colorOver:"grey",
+        colorOut:"white"
+      },
+      footerAction:()=>{this.props.addBook(book,this.props.user.username)}
+    };
+    return options;
+  }
 
   render(){
     console.log(this.state.term)
@@ -50,25 +61,27 @@ class AddBookPanel extends React.Component {
           </form>
         </div>
         <div className="dash-add-panel-list" style={styles.listPanel}>
-          {this.props.books && this.props.books.map((book,index)=>(
-              <Book
+          {this.props.books && this.props.books.map((book,index)=>{
+              const options = this.getBookPanelOptions(book);
+              return <Book
                 {...book}
-                key={book._id}
+                {...options}
+                key={book.selfLink}
               />
-            ))}
+            })}
         </div>
       </div>
     )
   }
 }
 
-function mapStateToProps({books}){
-    return {books:books.searchResult}
+function mapStateToProps({books,user}){
+    return {books:books.searchResult,user}
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {searchBooks}, dispatch);
+      {searchBooks,addBook}, dispatch);
 }
 
 

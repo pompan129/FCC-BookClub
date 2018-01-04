@@ -76,15 +76,6 @@ export const setAuthenticationError = (error)=>{
    }
 }
 
-export const renderModal = (visible, modal_type)=>{
-  console.log('renderModal', visible, modal_type);//todo
-  return {
-      type: RENDER_MODAL,
-      payload: {modal_type,visible}
-   }
-}
-
-
 //message actions------------------------------------------
 export const setHeaderMessage = (message)=>{
   return {
@@ -101,6 +92,14 @@ export const fecthStart = ()=>{
 export const fecthDone = ()=>{
   console.log("FETCHING_DONE");//todo
   return{type:FETCHING_DONE}
+}
+
+export const renderModal = (visible, modal_type)=>{
+  console.log('renderModal', visible, modal_type);//todo
+  return {
+      type: RENDER_MODAL,
+      payload: {modal_type,visible}
+   }
 }
 
 
@@ -212,12 +211,12 @@ export const fetchBooks = ()=>{
         })
         .catch((err)=>{
           console.log("fetchBooks", err.response.data.error);//todo
-          dispatch(setBooksError(err.response.data.error));
+          dispatch(batchActions([setBooksError(err.response.data.error),fecthDone()]));
         })
   }
-
 }
 
+//set google books search result in redux
 export const setSearchResult=(books)=>{
   console.log('setSearchResult', books);//todo
   return {
@@ -226,6 +225,7 @@ export const setSearchResult=(books)=>{
    }
 }
 
+//look for book title on Google books
 export const searchBooks = (query)=>{
   console.log("searchBooks: ",query);//todo
   return (dispatch, getState) => {
@@ -242,12 +242,38 @@ export const searchBooks = (query)=>{
           dispatch(batchActions([setBooksError(err.response.data.error),fecthDone()]));
         })
   }
-
 }
 
 //a thunk
-export const requestTrade = (user,bookID)=>{
+export const requestTrade = (id,username)=>{
+  console.log("requestTrade(1)",id,username);
+
   return (dispatch, getState) => {
+    dispatch(fecthStart());//start spinner
+    Axios.post('/api/booklist/update/status',{id,rq_status:{rq_state:"requested",rq_by:username}})
+      .then(resp=>{
+        console.log("requestTrade",resp);//todo  test
+        dispatch(batchActions([fetchBooks(),fecthDone()]));
+      })
+      .catch((err)=>{
+        console.log("requestTrade", err.response.data.error);//todo
+        dispatch(batchActions([setAuthenticationError(err.response.data.error),fecthDone()]));
+      })
+  }
+}
+
+
+//add book to DB for user
+export const addBook = (book,username)=>{
+  return (dispatch, getState) => {
+      Axios.post('/api/booklist/addremove',{...book,owner:username})
+        .then((resp)=>{
+          console.log('addBook',resp);//todo
+        })
+        .catch((err)=>{
+          console.log("addBook", err.response.data.error);//todo
+          dispatch(setAuthenticationError(err.response.data.error));
+        })
 
   }
 }

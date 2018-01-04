@@ -13,7 +13,7 @@ module.exports = function(app){
     //retrieve books from Google API
     app.get('/api/search/books',(req,res)=>{
         let {q} = req.query; //query string from user
-        console.log("search",q,req.query);//todo
+        //console.log("search",q,req.query);//todo
         if(!q){return res.end();}
 
         request.get({
@@ -30,7 +30,7 @@ module.exports = function(app){
           return res.send(500, { message: error.message});
           }
 
-          console.log( JSON.parse(body));//todo
+          //console.log( JSON.parse(body));//todo
 
           const books = JSON.parse(body).items.map((book)=>{
             const {selfLink} = book;
@@ -61,7 +61,7 @@ module.exports = function(app){
     //get books for one user
     app.get('/api/booklist/userlist',(req,res)=>{
       const {owner} = req.query;
-      console.log("userlist:", owner, req.query);//todo
+      //console.log("userlist:", owner, req.query);//todo
 
       Book.find({owner},(err, books)=>{
         if (err) {
@@ -109,11 +109,11 @@ module.exports = function(app){
     //add/remove book from user's wishlist   TODO
 
 
-
     //modify book status (requested, traded, etc..)
     app.post('/api/booklist/update/status',(req,res)=>{
       const {rq_status} = req.body;
-      const id = req.body._id;
+      const id = req.body.id;
+      //console.log("/api/booklist/update/status",rq_status,id);//todo
 
       Book.where({_id:id}).update({rq_status},(err, writeOpResult)=>{
         if (err) {

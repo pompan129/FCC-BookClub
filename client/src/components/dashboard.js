@@ -27,8 +27,6 @@ const styles = {
 }
 
 
-
-
 class DashBoard extends React.Component {
   state = {
     value: 0

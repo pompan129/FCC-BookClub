@@ -1,14 +1,17 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {fetchBooks,setHeaderMessage} from '../actions';
+import {fetchBooks,
+  requestTrade,
+  setHeaderMessage} from '../actions';
 import Book from "./book-card";
 import Root from "./root-page";
 import FavoriteIcon from 'material-ui-icons/Favorite';
 
 const styles = {
   div:{
-    display:'flex'
+    display:'flex',
+    flexWrap:'wrap'
   }
 }
 
@@ -19,16 +22,17 @@ class BookList extends React.Component {
     this.props.fetchBooks();
   }
 
-  handleRequest = ()=>{
-    if(this.props.user.authenticated){
+  getReqText = (book)=>{
+    return !this.props.user.authenticated?"Login to request trade":
+      book.rq_status.rq_state === "available"? "Add to wishlist":
+      book.rq_status.rq_state === "requested"? "Trade Pending":"???"
+  }
 
+  footerAction = (book)=>{
+    if(book.rq_status.rq_state === "available"){
+    this.props.requestTrade(book._id,this.props.user.username);
     }
   }
-
-  getReqText = (book)=>{
-    return <FavoriteIcon></FavoriteIcon>;
-  }
-
 
   render(){
     const {user,books,message} = this.props;
@@ -47,13 +51,13 @@ class BookList extends React.Component {
         >
         <div className="book-list" style={styles.div}>
         {books && books.map((book,index)=>{
-            return (user.authenticated && book.owner == user.username)? "":
-            <Book
+            if(user.authenticated && book.owner == user.username)return "";
+            return <Book
               {...book}
               {...bookProps}
               footerText={this.getReqText(book)}
               key={book._id}
-            />
+              footerAction={()=>this.footerAction(book)}/>
           })}
         </div>
       </Root>
@@ -68,7 +72,7 @@ function mapStateToProps({books,message,user}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {fetchBooks,setHeaderMessage}, dispatch);
+      {fetchBooks,setHeaderMessage,requestTrade}, dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(BookList)
