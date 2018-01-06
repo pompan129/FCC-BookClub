@@ -112,15 +112,28 @@ module.exports = function(app){
     })
     .delete('/api/booklist/addremove',(req,res)=>{
 
-      const id = req.body.id;
+      const {id,username} = req.body;
+
       console.log("addremove - delete:  ",id,req.body);//todo
 
-      Book.deleteOne({_id:id}, (err, writeOpResult)=>{  //todo fix delete error when book id doesn't exist (check writeOpResult.n)
+      Book.findOneAndRemove({_id:id}, (err, book)=>{  //todo fix delete error when book id doesn't exist (check writeOpResult.n)
         if (err) {
           console.log(err);
           return res.send(err);
         }
-        res.send ({writeOpResult,msg:"success!"});//todo
+        if(book){
+          User.findOneAndUpdate({username},{$pull:{book_ids:book.selfLink}},(err,user)=>{
+            if (err) {
+              console.log(err);
+              return res.send(err);
+            }
+            user.book_ids = user.book_ids.filter(bookID=>bookID !== book.selfLink);
+            return res.send ({msg:'success',user});//todo
+
+          })
+        }
+
+        return res.send (new Error("Book not found"));//todo
       })
     });
 

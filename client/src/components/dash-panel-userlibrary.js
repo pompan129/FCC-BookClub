@@ -54,7 +54,7 @@ class Libray extends React.Component {
         icon:<DeleteIcon/>,
         text:"Remove From Your Library",
         active:true,
-        action:()=>this.props.removeBookFromUserLibraryAndDB(book._id),
+        action:()=>this.props.removeBookFromUserLibraryAndDB(book._id,username),
         backgroundColor:'',
         backgroundColorOver:Red[300]
       }
@@ -65,14 +65,13 @@ class Libray extends React.Component {
     const {user} = this.props;
     const {books} = this.props.books
 
-    const wishlist = books?books.filter(book=>(
-      book.rq_status.rq_state === "requested" &&
-      book.rq_status.rq_by === user.username
+    const library = books?books.filter(book=>(
+      book.owner === user.username
     )):[];
 
     return (
         <div className="dash-panel-wishlist" style={styles.listPanel}>
-          {wishlist.map((book,index)=>{
+          {library.map((book,index)=>{
 
               const footer = this.getFooter(book);
 

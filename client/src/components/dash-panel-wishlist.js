@@ -93,7 +93,7 @@ function mapStateToProps({books,user}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {removeBookFromWishlist}, dispatch);
+      {removeBookFromWishlist,fetchBooks}, dispatch);
 }
 
 

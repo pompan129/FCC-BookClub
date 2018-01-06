@@ -131,7 +131,7 @@ export const signin = (username,password,successCallback)=>{
     Axios.post('/api/user/signin',{username,password})
       .then((resp)=>{
         console.log('action:signin',resp);//todo
-        const user = resp.data;
+        const {user} = resp.data;
 
         const batch = [];
         batch.push(setAuthentication(true));
@@ -308,11 +308,11 @@ export const addBook = (book,username)=>{
 }
 
 
-export const removeBookFromUserLibraryAndDB = (bookid)=>{   ///todo change
+export const removeBookFromUserLibraryAndDB = (bookid,username)=>{   ///todo change
     console.log("removeBookFromUserLibraryAndDB",bookid);//todo
   return (dispatch, getState) => {
     dispatch(fecthStart());//start spinner
-    Axios.delete('/api/booklist/addremove',{data:{id:bookid}})
+    Axios.delete('/api/booklist/addremove',{data:{id:bookid,username}})
       .then(resp=>{
         console.log("removeBookFromUserLibraryAndDB:SUCCESS",resp);//todo  test
         dispatch(fetchBooks());
