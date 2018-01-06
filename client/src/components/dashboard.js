@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 //components
 import RootPage from "./root-page";
 import AddBookPanel from "./dash-panel-addbook";//todo
+import UserLibraryPanel from "./dash-panel-userlibrary";//todo
 import WishlistPanel from "./dash-panel-wishlist";//todo
 //material UI components
 import Tabs, { Tab } from 'material-ui/Tabs';
@@ -75,7 +76,7 @@ class DashBoard extends React.Component {
             </Tabs>
             <Divider />
           {value === 0 && <TabContainer><AddBookPanel /></TabContainer>}
-          {value === 1 && <TabContainer>Your Books</TabContainer>}
+          {value === 1 && <TabContainer><UserLibraryPanel/></TabContainer>}
           {value === 2 && <TabContainer><WishlistPanel /></TabContainer>}
           {value === 3 && <TabContainer>Requested</TabContainer>}
           {value === 4 && <TabContainer>Loaned</TabContainer>}

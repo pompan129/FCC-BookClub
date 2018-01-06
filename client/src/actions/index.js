@@ -78,6 +78,7 @@ export const setAuthenticationError = (error)=>{
    }
 }
 
+
 //message actions------------------------------------------
 export const setHeaderMessage = (message)=>{
   return {
@@ -206,6 +207,8 @@ export const removeBookFromWishlist = (bookid)=>{
       })
   }
 }
+
+
 //book actions------------------------------------------------
 
 export const setBooks=(books)=>{
@@ -242,7 +245,7 @@ export const fetchBooks = ()=>{
   }
 }
 
-//set google books search result in redux
+//set google books search result in redux store
 export const setSearchResult=(books)=>{
   console.log('setSearchResult', books);//todo
   return {
@@ -270,9 +273,9 @@ export const searchBooks = (query)=>{
   }
 }
 
-//a thunk
+//a thunk - send users request to borrow book to DB
 export const requestTrade = (bookid,username)=>{
-  console.log("requestTrade(1)",bookid,username);
+  console.log("requestTrade(1)",bookid,username);//todo
 
   return (dispatch, getState) => {
     dispatch(fecthStart());//start spinner
@@ -289,7 +292,6 @@ export const requestTrade = (bookid,username)=>{
   }
 }
 
-
 //add book to DB for user
 export const addBook = (book,username)=>{
   return (dispatch, getState) => {
@@ -301,6 +303,24 @@ export const addBook = (book,username)=>{
       .catch((err)=>{
         console.log("addBook", err.response.data.error);//todo
         dispatch(setAuthenticationError(err.response.data.error));
+      })
+  }
+}
+
+
+export const removeBookFromUserLibraryAndDB = (bookid)=>{   ///todo change
+    console.log("removeBookFromUserLibraryAndDB",bookid);//todo
+  return (dispatch, getState) => {
+    dispatch(fecthStart());//start spinner
+    Axios.delete('/api/booklist/addremove',{data:{id:bookid}})
+      .then(resp=>{
+        console.log("removeBookFromUserLibraryAndDB:SUCCESS",resp);//todo  test
+        dispatch(fetchBooks());
+        dispatch(fecthDone());
+      })
+      .catch((err)=>{
+        console.log("removeBookFromUserLibraryAndDB:ERROR", err);//todo
+        dispatch(batchActions([setAuthenticationError(err.response.data.error),fecthDone()]));
       })
   }
 }

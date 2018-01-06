@@ -111,8 +111,10 @@ module.exports = function(app){
       })
     })
     .delete('/api/booklist/addremove',(req,res)=>{
-      const {title, owner} = req.body;
-      const id = req.body._id
+
+      const id = req.body.id;
+      console.log("addremove - delete:  ",id,req.body);//todo
+
       Book.deleteOne({_id:id}, (err, writeOpResult)=>{  //todo fix delete error when book id doesn't exist (check writeOpResult.n)
         if (err) {
           console.log(err);
@@ -121,7 +123,6 @@ module.exports = function(app){
         res.send ({writeOpResult,msg:"success!"});//todo
       })
     });
-
 
     //modify book status (requested, traded, etc..)
     app.post('/api/booklist/update/status',(req,res)=>{

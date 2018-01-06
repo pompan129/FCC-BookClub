@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 //actions
-import {removeBookFromWishlist,fetchBooks} from '../actions';
+import {removeBookFromUserLibraryAndDB,fetchBooks} from '../actions';
 
 //components
 import Book from "./book-card";
@@ -26,7 +26,7 @@ const styles = {
 }
 
 
-class WishListPanel extends React.Component {
+class Libray extends React.Component {
 
   state = {
     term: '',
@@ -52,9 +52,9 @@ class WishListPanel extends React.Component {
 
       return {
         icon:<DeleteIcon/>,
-        text:"Remove From Wishlist",
+        text:"Remove From Your Library",
         active:true,
-        action:()=>this.props.removeBookFromWishlist(book._id),
+        action:()=>this.props.removeBookFromUserLibraryAndDB(book._id),
         backgroundColor:'',
         backgroundColorOver:Red[300]
       }
@@ -93,8 +93,8 @@ function mapStateToProps({books,user}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {removeBookFromWishlist}, dispatch);
+      {removeBookFromUserLibraryAndDB,fetchBooks}, dispatch);
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(WishListPanel)
+export default connect(mapStateToProps,mapDispatchToProps)(Libray)
