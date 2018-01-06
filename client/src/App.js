@@ -11,8 +11,8 @@ import Home from './components/home';
 import DashBoard from './components/dashboard';
 import SignUpModal from './components/signup';
 import SignInModal from './components/signin';
-import blue from 'material-ui/colors/blue';
-import green from 'material-ui/colors/green';
+import Cyan from 'material-ui/colors/cyan';
+import blueGrey from 'material-ui/colors/blueGrey';
 import red from 'material-ui/colors/red';
 import { renderModal,
         logout,
@@ -23,9 +23,9 @@ import './App.css';
 
 const theme = createMuiTheme({
   palette: {
-    primary: blue,
+    primary: blueGrey,
     secondary: {
-      ...green
+      ...Cyan
     },
     error: red,
   },

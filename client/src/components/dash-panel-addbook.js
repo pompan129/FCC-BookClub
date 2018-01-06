@@ -1,11 +1,24 @@
 import React from "react";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import Book from "./book-card";
-import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
+
+//actions
 import {searchBooks,addBook} from '../actions';
 
+//components
+import Book from "./book-card";
+
+//material UI components
+import Button from 'material-ui/Button';
+import TextField from 'material-ui/TextField';
+
+//assets
+import AddIcon from 'material-ui-icons/Add';
+import CheckIcon from 'material-ui-icons/Check';
+import Cyan from 'material-ui/colors/cyan';
+import lightGreen from 'material-ui/colors/lightGreen';
+
+//styles
 const styles = {
   listPanel:{
     display:'flex',
@@ -30,21 +43,34 @@ class AddBookPanel extends React.Component {
     this.props.searchBooks(term);
   };
 
-  getBookPanelOptions = (book)=>{
-    const {user} = this.props;
-    const options ={
-      footer:{
-        colorOver:"grey",
-        colorOut:"white"
-      },
-      footerAction:()=>{this.props.addBook(book,this.props.user.username)}
-    };
-    return options;
-  }
+
+    getFooter = (book)=>{
+      const {selfLink}=book;
+      const {book_ids,username}=this.props.user;
+
+      if(book_ids.includes(selfLink)){
+        return {
+          icon:<CheckIcon/>,
+          text:"Already in Your Library",
+          active:false,
+          action:undefined,
+          backgroundColor:lightGreen['A700'],
+          backgroundColorOver:''
+        }
+      }
+      return {
+        icon:<AddIcon/>,
+        text:"Add to Your Library",
+        active:true,
+        action:()=>{this.props.addBook(book,username)},
+        backgroundColor:'transparent',
+        backgroundColorOver:Cyan['A400']
+      }
+    }
 
   render(){
     console.log(this.state.term)
-
+    const {searchResult} = this.props.books;
     return (
       <div className="dash-add-panel">
         <div className="add-book-panel-search">
@@ -61,11 +87,13 @@ class AddBookPanel extends React.Component {
           </form>
         </div>
         <div className="dash-add-panel-list" style={styles.listPanel}>
-          {this.props.books && this.props.books.map((book,index)=>{
-              const options = this.getBookPanelOptions(book);
+          {searchResult && searchResult.map((book,index)=>{
+
+              const footer = this.getFooter(book);
+
               return <Book
                 {...book}
-                {...options}
+                footer={footer}
                 key={book.selfLink}
               />
             })}
@@ -76,7 +104,7 @@ class AddBookPanel extends React.Component {
 }
 
 function mapStateToProps({books,user}){
-    return {books:books.searchResult,user}
+    return {books,user}
 }
 
 function mapDispatchToProps(dispatch) {

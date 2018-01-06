@@ -23,6 +23,7 @@ export const TEST="TEST";
 
 
 //action to complete multiple actions with only one call to dispatch/render
+//thunks do not work!!!!
 export const  batchActions = (actions)=>{
    return {
       type: BATCH_ACTIONS,
@@ -128,9 +129,11 @@ export const signin = (username,password,successCallback)=>{
     Axios.post('/api/user/signin',{username,password})
       .then((resp)=>{
         console.log('action:signin',resp);//todo
+        const user = resp.data;
+
         const batch = [];
         batch.push(setAuthentication(true));
-        batch.push(setUsername(username));//todo
+        batch.push(setUser(user));//todo
         batch.push(renderModal(false,''));
         batch.push(fecthDone());
         localStorage.setItem('jwt', resp.data.token);//JWT in localstorage for protected routes
@@ -252,11 +255,12 @@ export const requestTrade = (id,username)=>{
     dispatch(fecthStart());//start spinner
     Axios.post('/api/booklist/update/status',{id,rq_status:{rq_state:"requested",rq_by:username}})
       .then(resp=>{
-        console.log("requestTrade",resp);//todo  test
-        dispatch(batchActions([fetchBooks(),fecthDone()]));
+        console.log("requestTrade:SUCCESS",resp);//todo  test
+        dispatch(fetchBooks());
+        dispatch(fecthDone());
       })
       .catch((err)=>{
-        console.log("requestTrade", err.response.data.error);//todo
+        console.log("requestTrade:ERROR", err.response.data.error);//todo
         dispatch(batchActions([setAuthenticationError(err.response.data.error),fecthDone()]));
       })
   }
@@ -268,7 +272,8 @@ export const addBook = (book,username)=>{
   return (dispatch, getState) => {
       Axios.post('/api/booklist/addremove',{...book,owner:username})
         .then((resp)=>{
-          console.log('addBook',resp);//todo
+          console.log("addBook,Success:",resp);//todo
+          
         })
         .catch((err)=>{
           console.log("addBook", err.response.data.error);//todo

@@ -1,6 +1,7 @@
 const request = require('request'); //to make 0auth requests
 const env = require('../../environment.variables');
 const Book = require('../models/books');
+const User = require("../models/user");
 
 module.exports = function(app){
   console.log("setting routes...");//todo
@@ -58,7 +59,7 @@ module.exports = function(app){
         })
     });
 
-    //get books for one user
+    //get books for one user todo--needed??
     app.get('/api/booklist/userlist',(req,res)=>{
       const {owner} = req.query;
       //console.log("userlist:", owner, req.query);//todo
@@ -73,24 +74,40 @@ module.exports = function(app){
 
     })
 
-    //add/remove book from DB list
+    //add/remove book from DB list & add/remove from user profile
     app.post('/api/booklist/addremove',(req,res)=>{
       const {authors,title,publisher,publishedDate,
         description,selfLink,thumbnail, owner} = req.body;
 
+
       const newBook = new Book({
         authors,title,publisher,publishedDate,
-          description,selfLink,thumbnail, owner, rq_status:{rq_state:"available"}
+          description,selfLink,thumbnail,owner,rq_status:{rq_state:"available"}
       })
+
       console.log("add/remove book:  ",authors,title,publisher,publishedDate,
-        description,selfLink,thumbnail, owner)
+        description,selfLink,thumbnail, owner);//todo
 
       newBook.save(function (err,book) {
         if (err) {
           console.log(err);
           return res.send(err);
         }
-        res.send ({book,msg:"success!"});//todo
+
+        //if book is saved  - add to user library(book_ids)
+        if(book){
+          User.findOneAndUpdate({username:owner},{"$push":{"book_ids":selfLink}},
+            (err, user)=>{
+              if (err) {
+                console.log(err);
+                return res.send(err);
+            }
+
+              return res.send({user,msg:"update success!",
+                owner:user.username,book:title});//todo
+          })
+        }
+        else{ return res.send(new Error("could not save book to DB"))}
       })
     })
     .delete('/api/booklist/addremove',(req,res)=>{
@@ -113,7 +130,7 @@ module.exports = function(app){
     app.post('/api/booklist/update/status',(req,res)=>{
       const {rq_status} = req.body;
       const id = req.body.id;
-      //console.log("/api/booklist/update/status",rq_status,id);//todo
+      console.log("/api/booklist/update/status",rq_status,id);//todo
 
       Book.where({_id:id}).update({rq_status},(err, writeOpResult)=>{
         if (err) {

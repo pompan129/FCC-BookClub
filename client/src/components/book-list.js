@@ -1,19 +1,32 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+
+//actions
 import {fetchBooks,
   requestTrade,
   setHeaderMessage} from '../actions';
+
+//components
 import Book from "./book-card";
 import Root from "./root-page";
-import FavoriteIcon from 'material-ui-icons/Favorite';
 
+//assets
+import FavoriteIcon from 'material-ui-icons/Favorite';
+import ImportExportIcon from 'material-ui-icons/ImportExport';
+import Cyan from 'material-ui/colors/cyan';
+import blueGrey from 'material-ui/colors/blueGrey';
+
+//styles
 const styles = {
-  div:{
+  list:{
     display:'flex',
-    flexWrap:'wrap'
+    flexWrap:'wrap',
+    justifyContent:'center',
+    paddingTop:"1.5rem"
   }
 }
+
 
 class BookList extends React.Component {
 
@@ -22,15 +35,38 @@ class BookList extends React.Component {
     this.props.fetchBooks();
   }
 
-  getReqText = (book)=>{
-    return !this.props.user.authenticated?"Login to request trade":
-      book.rq_status.rq_state === "available"? "Add to wishlist":
-      book.rq_status.rq_state === "requested"? "Trade Pending":"???"
-  }
+  getFooter = (book)=>{
+    const {owner,rq_status,_id}=book;
 
-  footerAction = (book)=>{
-    if(book.rq_status.rq_state === "available"){
-    this.props.requestTrade(book._id,this.props.user.username);
+    if(!this.props.user.authenticated){
+      return {
+        icon:'',
+        text:"Login to Trade Books",
+        active:false,
+        action:undefined,
+        backgroundColor:blueGrey[100],
+        backgroundColorOver:undefined
+      }
+    }
+    if(rq_status.rq_state === "available"){
+      return {
+        icon:<FavoriteIcon/>,
+        text:"Add to Wishlist",
+        active:true,
+        action:()=>this.props.requestTrade(_id, this.props.user.username),
+        backgroundColor:'',
+        backgroundColorOver:Cyan['A400']
+      }
+    }
+    if(rq_status.rq_state === "requested"){
+      return {
+        icon:<ImportExportIcon/>,
+        text:"Trade Pending",
+        active:false,
+        action:undefined,
+        backgroundColor:blueGrey[100],
+        backgroundColorOver:undefined
+      }
     }
   }
 
@@ -49,17 +85,21 @@ class BookList extends React.Component {
         subtitle="click on a book to make a trade"
         fetching={message.fetching}
         >
-        <div className="book-list" style={styles.div}>
-        {books && books.map((book,index)=>{
-            if(user.authenticated && book.owner == user.username)return "";
-            return <Book
-              {...book}
-              {...bookProps}
-              footerText={this.getReqText(book)}
-              key={book._id}
-              footerAction={()=>this.footerAction(book)}/>
-          })}
-        </div>
+          <div className="book-list" style={styles.list}>
+          {books && books.map((book,index)=>{
+
+              //don't show if ...
+              if(user.authenticated && book.owner === user.username)return;
+              if(book.rq_status.rq_state === 'traded')return;
+
+              const footer = this.getFooter(book);
+
+              return <Book
+                {...book}
+                footer={footer}
+                key={book._id}/>
+            })}
+          </div>
       </Root>
     )
   }

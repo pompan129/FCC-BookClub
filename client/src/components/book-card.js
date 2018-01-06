@@ -4,6 +4,8 @@ import Card,
   {CardHeader, CardMedia, CardContent,CardActions} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
+import Footer from "./book-card-footer";
+import imageNotAvailable from "../assets/ImageNotAvailable.png";
 
 
 const styles = {
@@ -61,7 +63,7 @@ const BookCard = (props)=>{
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}
-          image={thumbnail}
+          image={thumbnail || imageNotAvailable}
           title="Book Thumbnail"
         />
         <CardHeader
@@ -77,13 +79,7 @@ const BookCard = (props)=>{
         </CardContent>
         <Divider light />
         <CardActions disableActionSpacing={true} className={classes.actions}>
-          <div className={classes.footer}
-            onMouseOver={({target})=>{footer?target.style.backgroundColor = footer.colorOver:""}}
-            onMouseOut={({target})=>{footer?target.style.backgroundColor = footer.colorOut:""}}
-            onClick={()=>footerAction(id)}
-            >
-            <span>{footer && footer.text}</span>
-          </div>
+          <Footer {...footer}>{footer.icon}{footer.text}</Footer>
         </CardActions>
       </Card>
     </div>
