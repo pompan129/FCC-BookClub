@@ -1,19 +1,26 @@
 import React from "react";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+
+//components
 import RootPage from "./root-page";
 import AddBookPanel from "./dash-panel-addbook";//todo
+import WishlistPanel from "./dash-panel-wishlist";//todo
+//material UI components
 import Tabs, { Tab } from 'material-ui/Tabs';
 import TabContainer from './tab-container';
 import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
-import FavoriteIcon from 'material-ui-icons/Favorite';
-import EditIcon from 'material-ui-icons/Edit';
-import AddCircleIcon from 'material-ui-icons/AddCircle';
 import Badge from 'material-ui/Badge';
 import Typography from 'material-ui/Typography';
 
+//assets
+import FavoriteIcon from 'material-ui-icons/Favorite';
+import EditIcon from 'material-ui-icons/Edit';
+import AddCircleIcon from 'material-ui-icons/AddCircle';
 
+
+//styles
 const styles = {
   profile:{
     margin:'1em 0 0 2.5rem'
@@ -69,7 +76,7 @@ class DashBoard extends React.Component {
             <Divider />
           {value === 0 && <TabContainer><AddBookPanel /></TabContainer>}
           {value === 1 && <TabContainer>Your Books</TabContainer>}
-          {value === 2 && <TabContainer>Wishlist</TabContainer>}
+          {value === 2 && <TabContainer><WishlistPanel /></TabContainer>}
           {value === 3 && <TabContainer>Requested</TabContainer>}
           {value === 4 && <TabContainer>Loaned</TabContainer>}
           {value === 5 && <TabContainer>Recieved</TabContainer>}

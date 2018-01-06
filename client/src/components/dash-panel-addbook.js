@@ -51,7 +51,7 @@ class AddBookPanel extends React.Component {
       if(book_ids.includes(selfLink)){
         return {
           icon:<CheckIcon/>,
-          text:"Already in Your Library",
+          text:"In Your Library",
           active:false,
           action:undefined,
           backgroundColor:lightGreen['A700'],

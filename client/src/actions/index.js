@@ -5,6 +5,7 @@ export const BATCH_ACTIONS = "BATCH_ACTIONS";
 export const SET_AUTHENTICATION = "SET_AUTHENTICATION";
 export const SET_USERNAME = "SET_USERNAME";
 export const SET_USER = "SET_USER";
+export const UPDATE_USER_LIBRARY = "UPDATE_USER_LIBRARY";
 export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
 export const AUTH_JWT = "AUTH_JWT";
 export const LOGIN_USER_JWT = "LOGIN_USER_JWT";
@@ -182,7 +183,29 @@ export const logout=()=>{
   return batchActions(batch);
 }
 
+export const updateUserLibrary=(user)=>{
+  return {
+      type: UPDATE_USER_LIBRARY,
+      payload: user.book_ids
+    }
+}
 
+export const removeBookFromWishlist = (bookid)=>{
+
+  return (dispatch, getState) => {
+    dispatch(fecthStart());//start spinner
+    Axios.post('/api/booklist/update/status',{id:bookid,rq_status:{rq_state:"available"}})
+      .then(resp=>{
+        console.log("removeBookFromWishlist:SUCCESS",resp);//todo  test
+        dispatch(fetchBooks());
+        dispatch(fecthDone());
+      })
+      .catch((err)=>{
+        console.log("requestTrade:ERROR", err.response.data.error);//todo
+        dispatch(batchActions([setAuthenticationError(err.response.data.error),fecthDone()]));
+      })
+  }
+}
 //book actions------------------------------------------------
 
 export const setBooks=(books)=>{
@@ -248,12 +271,12 @@ export const searchBooks = (query)=>{
 }
 
 //a thunk
-export const requestTrade = (id,username)=>{
-  console.log("requestTrade(1)",id,username);
+export const requestTrade = (bookid,username)=>{
+  console.log("requestTrade(1)",bookid,username);
 
   return (dispatch, getState) => {
     dispatch(fecthStart());//start spinner
-    Axios.post('/api/booklist/update/status',{id,rq_status:{rq_state:"requested",rq_by:username}})
+    Axios.post('/api/booklist/update/status',{id:bookid,rq_status:{rq_state:"requested",rq_by:username}})
       .then(resp=>{
         console.log("requestTrade:SUCCESS",resp);//todo  test
         dispatch(fetchBooks());
@@ -270,15 +293,14 @@ export const requestTrade = (id,username)=>{
 //add book to DB for user
 export const addBook = (book,username)=>{
   return (dispatch, getState) => {
-      Axios.post('/api/booklist/addremove',{...book,owner:username})
-        .then((resp)=>{
-          console.log("addBook,Success:",resp);//todo
-          
-        })
-        .catch((err)=>{
-          console.log("addBook", err.response.data.error);//todo
-          dispatch(setAuthenticationError(err.response.data.error));
-        })
-
+    Axios.post('/api/booklist/addremove',{...book,owner:username})
+      .then((resp)=>{
+        console.log("addBook,Success:",resp);//todo
+        dispatch(updateUserLibrary(resp.data.user));
+      })
+      .catch((err)=>{
+        console.log("addBook", err.response.data.error);//todo
+        dispatch(setAuthenticationError(err.response.data.error));
+      })
   }
 }

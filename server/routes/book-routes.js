@@ -102,7 +102,7 @@ module.exports = function(app){
                 console.log(err);
                 return res.send(err);
             }
-
+              user.book_ids.push(selfLink);
               return res.send({user,msg:"update success!",
                 owner:user.username,book:title});//todo
           })
@@ -123,13 +123,10 @@ module.exports = function(app){
     });
 
 
-    //add/remove book from user's wishlist   TODO
-
-
     //modify book status (requested, traded, etc..)
     app.post('/api/booklist/update/status',(req,res)=>{
-      const {rq_status} = req.body;
-      const id = req.body.id;
+      const {rq_status,id} = req.body;
+
       console.log("/api/booklist/update/status",rq_status,id);//todo
 
       Book.where({_id:id}).update({rq_status},(err, writeOpResult)=>{
