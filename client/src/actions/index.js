@@ -14,6 +14,7 @@ export const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 export const FETCHING_START = "FETCHING_START";
 export const FETCHING_DONE = "FETCHING_DONE";
 export const SEARCH_BOOKS = "SEARCH_BOOKS";
+export const ADD_BOOK_LOCAL = "ADD_BOOK_LOCAL";
 export const SET_BOOKS = "SET_BOOKS";
 export const SET_SEARCH_RESULT = "SET_SEARCH_RESULT";
 export const SET_BOOKS_ERROR = "SET_BOOKS_ERROR";
@@ -183,14 +184,14 @@ export const logout=()=>{
   localStorage.setItem('jwt','');//JWT in localstorage for protected routes
   return batchActions(batch);
 }
-
+/*
 export const updateUserLibrary=(user)=>{
   return {
       type: UPDATE_USER_LIBRARY,
       payload: user.book_ids
     }
 }
-
+*/
 export const removeBookFromWishlist = (bookid)=>{
 
   return (dispatch, getState) => {
@@ -245,6 +246,8 @@ export const fetchBooks = ()=>{
   }
 }
 
+
+
 //set google books search result in redux store
 export const setSearchResult=(books)=>{
   console.log('setSearchResult', books);//todo
@@ -298,7 +301,7 @@ export const addBook = (book,username)=>{
     Axios.post('/api/booklist/addremove',{...book,owner:username})
       .then((resp)=>{
         console.log("addBook,Success:",resp);//todo
-        dispatch(updateUserLibrary(resp.data.user));
+        dispatch(addBookLocal(resp.data.book));
       })
       .catch((err)=>{
         console.log("addBook", err.response.data.error);//todo
@@ -307,6 +310,13 @@ export const addBook = (book,username)=>{
   }
 }
 
+//add book to local store
+export const addBookLocal = (book)=>{
+  return {
+      type: ADD_BOOK_LOCAL,
+      payload: book
+    }
+}
 
 export const removeBookFromUserLibraryAndDB = (bookid,username)=>{   ///todo change
     console.log("removeBookFromUserLibraryAndDB",bookid);//todo

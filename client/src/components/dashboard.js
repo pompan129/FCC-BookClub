@@ -2,6 +2,9 @@ import React from "react";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
+//actions
+import {fetchBooks} from '../actions';
+
 //components
 import RootPage from "./root-page";
 import AddBookPanel from "./dash-panel-addbook";//todo
@@ -40,6 +43,10 @@ class DashBoard extends React.Component {
     value: 0
   };
 
+  componentDidMount=()=>{
+    if(!this.props.books.books){this.props.fetchBooks();}
+  }
+
   handleChange = (event,value) => {
     this.setState({ value });
   };
@@ -47,7 +54,13 @@ class DashBoard extends React.Component {
 
   render(){
     const { value } = this.state;
-    const {username,email,book_ids,wishlist} = this.props.user;
+    const {username,email,uthenticated} = this.props.user;
+    const {books} = this.props.books;
+    const userList = books?books.filter(book=>book.owner === username):[];
+    const wishList = books?books.filter(book=>book.rq_status.rq_by === username &&
+      book.rq_status.rq_state === "requested"):
+      []
+
 
     return(
       <RootPage name="dashboard-root" fetching={this.props.message.fetching}
@@ -64,9 +77,9 @@ class DashBoard extends React.Component {
         <div className="tabs-container" style={styles.tabsContainer}>
             <Tabs value={value} onChange={this.handleChange} style={styles.tabs}>
               <Tab label="Add Book" icon={<AddCircleIcon/>}/>
-              <Tab label="Your Books" />
+              <Tab label="Your Books" icon={userList.length}/>
               <Tab label="Wishlist" icon={
-                  <Badge badgeContent={4} color="primary">
+                  <Badge badgeContent={wishList.length} color="primary">
                     <FavoriteIcon/>
                   </Badge>}
                 />
@@ -75,9 +88,11 @@ class DashBoard extends React.Component {
               <Tab label="Recieved" />
             </Tabs>
             <Divider />
-          {value === 0 && <TabContainer><AddBookPanel /></TabContainer>}
-          {value === 1 && <TabContainer><UserLibraryPanel/></TabContainer>}
-          {value === 2 && <TabContainer><WishlistPanel /></TabContainer>}
+          {value === 0 && <TabContainer><AddBookPanel userlistIDs={userList.map(
+            book=>book.selfLink
+          )}/></TabContainer>}
+          {value === 1 && <TabContainer><UserLibraryPanel userlist={userList} /></TabContainer>}
+          {value === 2 && <TabContainer><WishlistPanel wishlist={wishList}/></TabContainer>}
           {value === 3 && <TabContainer>Requested</TabContainer>}
           {value === 4 && <TabContainer>Loaned</TabContainer>}
           {value === 5 && <TabContainer>Recieved</TabContainer>}
@@ -88,16 +103,12 @@ class DashBoard extends React.Component {
 }
 
 function mapStateToProps({books,user,message}){
-    return {
-      books:books.searchResult,
-      message,
-      user
-    }
+    return { books, message, user}
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {}, dispatch);
+      {fetchBooks}, dispatch);
 }
 
 

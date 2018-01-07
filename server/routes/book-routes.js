@@ -74,11 +74,10 @@ module.exports = function(app){
 
     })
 
-    //add/remove book from DB list & add/remove from user profile
+    //add/remove book from DB
     app.post('/api/booklist/addremove',(req,res)=>{
       const {authors,title,publisher,publishedDate,
         description,selfLink,thumbnail, owner} = req.body;
-
 
       const newBook = new Book({
         authors,title,publisher,publishedDate,
@@ -93,21 +92,8 @@ module.exports = function(app){
           console.log(err);
           return res.send(err);
         }
-
-        //if book is saved  - add to user library(book_ids)
-        if(book){
-          User.findOneAndUpdate({username:owner},{"$push":{"book_ids":selfLink}},
-            (err, user)=>{
-              if (err) {
-                console.log(err);
-                return res.send(err);
-            }
-              user.book_ids.push(selfLink);
-              return res.send({user,msg:"update success!",
-                owner:user.username,book:title});//todo
-          })
-        }
-        else{ return res.send(new Error("could not save book to DB"))}
+            console.log("book saved:",book);//todo
+        return res.send({msg:'success',book});
       })
     })
     .delete('/api/booklist/addremove',(req,res)=>{
@@ -118,22 +104,27 @@ module.exports = function(app){
 
       Book.findOneAndRemove({_id:id}, (err, book)=>{  //todo fix delete error when book id doesn't exist (check writeOpResult.n)
         if (err) {
-          console.log(err);
+          console.log("addremoveError-findOneAndRemove",err);
           return res.send(err);
         }
+
+        //if book returned delete from user library(book_ids) list
         if(book){
           User.findOneAndUpdate({username},{$pull:{book_ids:book.selfLink}},(err,user)=>{
             if (err) {
-              console.log(err);
+              console.log("addremoveError-findOneAndUpdate",err);
               return res.send(err);
             }
+            console.log("addremovesucces",user);
             user.book_ids = user.book_ids.filter(bookID=>bookID !== book.selfLink);
             return res.send ({msg:'success',user});//todo
-
           })
         }
-
-        return res.send (new Error("Book not found"));//todo
+        //if book not returned - return an error
+        else{
+          console.log("addremoveError-END");
+          return res.send (new Error("Book not found"));//todo
+        }
       })
     });
 

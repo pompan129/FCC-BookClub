@@ -12,8 +12,6 @@ const userSchema = new Schema({
     state:String,
     zip:String
   },
-  book_ids:[String],
-  wishlist: [String],
   auth_type:String //ie twitter or local etc...
 });
 

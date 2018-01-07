@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 //actions
-import {removeBookFromUserLibraryAndDB,fetchBooks} from '../actions';
+import {removeBookFromUserLibraryAndDB} from '../actions';
 
 //components
 import Book from "./book-card";
@@ -32,10 +32,6 @@ class Libray extends React.Component {
     term: '',
   };
 
-  componentDidMount=()=>{
-    if(!this.props.books.books){this.props.fetchBooks();}
-  }
-
   handleChange = (event) => {
     this.setState({ term:event.target.value });
   };
@@ -62,16 +58,11 @@ class Libray extends React.Component {
 
   render(){
     console.log(this.state.term);//todo
-    const {user} = this.props;
-    const {books} = this.props.books
-
-    const library = books?books.filter(book=>(
-      book.owner === user.username
-    )):[];
+    const {user,userlist} = this.props;
 
     return (
         <div className="dash-panel-wishlist" style={styles.listPanel}>
-          {library.map((book,index)=>{
+          {userlist && userlist.map((book,index)=>{
 
               const footer = this.getFooter(book);
 
@@ -87,12 +78,12 @@ class Libray extends React.Component {
 }
 
 function mapStateToProps({books,user}){
-    return {books,user}
+    return {user}
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {removeBookFromUserLibraryAndDB,fetchBooks}, dispatch);
+      {removeBookFromUserLibraryAndDB}, dispatch);
 }
 
 

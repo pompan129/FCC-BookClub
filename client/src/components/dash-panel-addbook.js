@@ -46,9 +46,9 @@ class AddBookPanel extends React.Component {
 
     getFooter = (book)=>{
       const {selfLink}=book;
-      const {book_ids,username}=this.props.user;
+      const {username}=this.props.user;
 
-      if(book_ids.includes(selfLink)){
+      if(this.props.userlistIDs.includes(selfLink)){
         return {
           icon:<CheckIcon/>,
           text:"In Your Library",
@@ -103,8 +103,8 @@ class AddBookPanel extends React.Component {
   }
 }
 
-function mapStateToProps({books,user}){
-    return {books,user}
+function mapStateToProps({user,books}){
+    return {user,books}
 }
 
 function mapDispatchToProps(dispatch) {
