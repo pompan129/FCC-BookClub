@@ -1,21 +1,24 @@
 import React from "react";
 import {Link} from 'react-router-dom';
+
+
+//material UI components
 import Toolbar from 'material-ui/Toolbar';
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
-//import { grey, lightGreen } from 'material-ui/colors';
-import logo from "../assets/logo.png";
 
+//assets
+import logo from "../assets/logo.png";
 
 
 const Navbar = (props)=>{
   const styles = {
     button: {
       margin: '0 .25em',
-      backgroundColor:'accent'//lightGreen[500]
+      backgroundColor:'accent'
     },
     toolbar:{
-      backgroundColor:'primary',//grey[800],
+      backgroundColor:'primary',
       justifyContent:'space-between'
     },
     img:{

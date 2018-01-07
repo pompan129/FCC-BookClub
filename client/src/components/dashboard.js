@@ -1,15 +1,18 @@
 import React from "react";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import { Redirect } from 'react-router'
+
 
 //actions
 import {fetchBooks} from '../actions';
 
 //components
 import RootPage from "./root-page";
-import AddBookPanel from "./dash-panel-addbook";//todo
-import UserLibraryPanel from "./dash-panel-userlibrary";//todo
-import WishlistPanel from "./dash-panel-wishlist";//todo
+import AddBookPanel from "./dash-panel-addbook";
+import UserLibraryPanel from "./dash-panel-userlibrary";
+import WishlistPanel from "./dash-panel-wishlist";
+import RequestedBooksPanel from "./dash-panel-requestedbooks";
 //material UI components
 import Tabs, { Tab } from 'material-ui/Tabs';
 import TabContainer from './tab-container';
@@ -53,13 +56,17 @@ class DashBoard extends React.Component {
 
 
   render(){
+    if(!this.props.user.authenticated){return <Redirect to='/'/>}
+
     const { value } = this.state;
-    const {username,email,uthenticated} = this.props.user;
+    const {username,email} = this.props.user;
     const {books} = this.props.books;
     const userList = books?books.filter(book=>book.owner === username):[];
     const wishList = books?books.filter(book=>book.rq_status.rq_by === username &&
-      book.rq_status.rq_state === "requested"):
-      []
+      book.rq_status.rq_state === "requested"):[];
+    const requestList = books?books.filter(book=>book.owner === username &&
+      book.rq_status.rq_state === "requested"):[];
+
 
 
     return(
@@ -83,7 +90,7 @@ class DashBoard extends React.Component {
                     <FavoriteIcon/>
                   </Badge>}
                 />
-              <Tab label="Requested" />
+              <Tab label="Requested" icon={requestList.length}/>
               <Tab label="Loaned" />
               <Tab label="Recieved" />
             </Tabs>
@@ -93,7 +100,7 @@ class DashBoard extends React.Component {
           )}/></TabContainer>}
           {value === 1 && <TabContainer><UserLibraryPanel userlist={userList} /></TabContainer>}
           {value === 2 && <TabContainer><WishlistPanel wishlist={wishList}/></TabContainer>}
-          {value === 3 && <TabContainer>Requested</TabContainer>}
+          {value === 3 && <TabContainer><RequestedBooksPanel list={requestList}/></TabContainer>}
           {value === 4 && <TabContainer>Loaned</TabContainer>}
           {value === 5 && <TabContainer>Recieved</TabContainer>}
         </div>

@@ -110,15 +110,7 @@ module.exports = function(app){
 
         //if book returned delete from user library(book_ids) list
         if(book){
-          User.findOneAndUpdate({username},{$pull:{book_ids:book.selfLink}},(err,user)=>{
-            if (err) {
-              console.log("addremoveError-findOneAndUpdate",err);
-              return res.send(err);
-            }
-            console.log("addremovesucces",user);
-            user.book_ids = user.book_ids.filter(bookID=>bookID !== book.selfLink);
-            return res.send ({msg:'success',user});//todo
-          })
+          return res.send ({msg:'success',book});//todo
         }
         //if book not returned - return an error
         else{

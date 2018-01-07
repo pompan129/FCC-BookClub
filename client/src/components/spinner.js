@@ -1,6 +1,5 @@
 import React from "react";
 import { CircularProgress } from 'material-ui/Progress';
-import Modal from 'material-ui/Modal';
 
  const style = {
    backdrop:{
@@ -14,10 +13,8 @@ import Modal from 'material-ui/Modal';
 
   }};
 
-  const open = true;
-
 const Spinner = (props)=>{
-  console.log("spinning****");//todo
+  //console.log("spinning****");//todo
   return(
     <div style={style.backdrop}>
         <CircularProgress  color="primary" size={100} thickness={10}/>

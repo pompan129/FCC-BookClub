@@ -5,7 +5,7 @@ const defaultState = {
   }
 
 export default function (state=defaultState, action) {
-  console.log("msgReducer", action,"state:",state);//todo
+  //console.log("msgReducer", action,"state:",state);//todo
     switch (action.type) {
         case SET_HEADER_MESSAGE:
           return {...state,header:action.payload};

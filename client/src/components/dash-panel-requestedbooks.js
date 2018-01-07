@@ -9,10 +9,11 @@ import {removeBookFromWishlist,fetchBooks} from '../actions';
 import Book from "./book-card";
 
 //material UI components todo
-
+import Button from 'material-ui/Button';
 
 //assets
 import DeleteIcon from 'material-ui-icons/Delete';
+import Green from 'material-ui/colors/green';
 import Red from 'material-ui/colors/red';
 
 //styles
@@ -47,12 +48,13 @@ class WishListPanel extends React.Component {
 
 
     getFooter = (book)=>{
-
       return {
-        icon:<DeleteIcon/>,
-        text:"Remove From Wishlist",
-        active:true,
-        action:()=>this.props.removeBookFromWishlist(book._id),
+        icon: <span>
+          <Button color='contrast'>Confirm</Button>
+          <Button color='accent'>Reject</Button>
+          </span>,
+        active:false,
+        //action:()=>this.props.removeBookFromWishlist(book._id),
         backgroundColor:'',
         backgroundColorOver:Red[300]
       }
@@ -60,17 +62,12 @@ class WishListPanel extends React.Component {
 
   render(){
     console.log(this.state.term);//todo
-    const {user} = this.props;
+    const {user,list} = this.props;
     const {books} = this.props.books
-
-    const wishlist = books?books.filter(book=>(
-      book.rq_status.rq_state === "requested" &&
-      book.rq_status.rq_by === user.username
-    )):[];
 
     return (
         <div className="dash-panel-wishlist" style={styles.listPanel}>
-          {wishlist.map((book,index)=>{
+          {list.map((book,index)=>{
 
               const footer = this.getFooter(book);
 

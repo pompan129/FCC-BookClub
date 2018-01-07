@@ -89,17 +89,17 @@ export const setHeaderMessage = (message)=>{
 }
 
 export const fecthStart = ()=>{
-  console.log("FETCHING_START");//todo
+  //console.log("FETCHING_START");//todo
   return{type:FETCHING_START}
 }
 
 export const fecthDone = ()=>{
-  console.log("FETCHING_DONE");//todo
+  //console.log("FETCHING_DONE");//todo
   return{type:FETCHING_DONE}
 }
 
 export const renderModal = (visible, modal_type)=>{
-  console.log('renderModal', visible, modal_type);//todo
+  //console.log('renderModal', visible, modal_type);//todo
   return {
       type: RENDER_MODAL,
       payload: {modal_type,visible}
@@ -213,7 +213,7 @@ export const removeBookFromWishlist = (bookid)=>{
 //book actions------------------------------------------------
 
 export const setBooks=(books)=>{
-  console.log('setBooks', books);//todo
+  //console.log('setBooks', books);//todo
   return {
       type: SET_BOOKS,
       payload: books
@@ -236,7 +236,7 @@ export const fetchBooks = ()=>{
 
       Axios.get('/api/booklist/list')
         .then((resp)=>{
-            console.log("fetchBooks", resp.data);//todo
+          //  console.log("fetchBooks", resp.data);//todo
             dispatch(batchActions([setBooks(resp.data),fecthDone()]));
         })
         .catch((err)=>{
@@ -318,7 +318,7 @@ export const addBookLocal = (book)=>{
     }
 }
 
-export const removeBookFromUserLibraryAndDB = (bookid,username)=>{   ///todo change
+export const removeBook = (bookid,username)=>{   ///todo change
     console.log("removeBookFromUserLibraryAndDB",bookid);//todo
   return (dispatch, getState) => {
     dispatch(fecthStart());//start spinner

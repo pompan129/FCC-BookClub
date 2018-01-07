@@ -23,9 +23,17 @@ const styles = {
     display:'flex',
     flexWrap:'wrap',
     justifyContent:'center',
-    paddingTop:"1.5rem"
+    paddingTop:"1.5rem",
   }
 }
+
+const footerTheme = outerTheme => ({
+  ...outerTheme,
+  footer: {
+    color: 'orange',
+  },
+});
+
 
 
 class BookList extends React.Component {
@@ -36,7 +44,7 @@ class BookList extends React.Component {
   }
 
   getFooter = (book)=>{
-    const {owner,rq_status,_id}=book;
+    const {rq_status,_id}=book;
 
     if(!this.props.user.authenticated){
       return {
@@ -55,7 +63,8 @@ class BookList extends React.Component {
         active:true,
         action:()=>this.props.requestTrade(_id, this.props.user.username),
         backgroundColor:'',
-        backgroundColorOver:Cyan['A400']
+        backgroundColorOver:Cyan['A400'],
+        theme:footerTheme
       }
     }
     if(rq_status.rq_state === "requested"){
@@ -72,12 +81,6 @@ class BookList extends React.Component {
 
   render(){
     const {user,books,message} = this.props;
-    const bookProps = {
-      footer:{
-        colorOver:"grey",
-        colorOut:"white"
-      }
-    }
 
     return (
       <Root name="book-list-root"
@@ -89,8 +92,8 @@ class BookList extends React.Component {
           {books && books.map((book,index)=>{
 
               //don't show if ...
-              if(user.authenticated && book.owner === user.username)return;
-              if(book.rq_status.rq_state === 'traded')return;
+              if(user.authenticated && book.owner === user.username)return '';
+              if(book.rq_status.rq_state === 'traded')return '';
 
               const footer = this.getFooter(book);
 

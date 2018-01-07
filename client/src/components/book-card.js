@@ -55,8 +55,7 @@ const styles = {
 const BookCard = (props)=>{
   //console.log("BookCard", props);//todo
   const { classes,footer,authors,publisher,publishedDate,
-    thumbnail,title,footerText,footerAction} = props;
-    const id = props._id || props.selfLink;
+    thumbnail,title} = props;
 
   return(
     <div className="book-card">

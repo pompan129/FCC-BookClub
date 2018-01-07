@@ -3,14 +3,12 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 //actions
-import {removeBookFromUserLibraryAndDB} from '../actions';
+import {removeBook} from '../actions';
 
 //components
 import Book from "./book-card";
 
-//material UI components
-import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
+//material UI components todo
 
 //assets
 import DeleteIcon from 'material-ui-icons/Delete';
@@ -50,7 +48,7 @@ class Libray extends React.Component {
         icon:<DeleteIcon/>,
         text:"Remove From Your Library",
         active:true,
-        action:()=>this.props.removeBookFromUserLibraryAndDB(book._id,username),
+        action:()=>this.props.removeBook(book._id,username),
         backgroundColor:'',
         backgroundColorOver:Red[300]
       }
@@ -58,7 +56,7 @@ class Libray extends React.Component {
 
   render(){
     console.log(this.state.term);//todo
-    const {user,userlist} = this.props;
+    const {userlist} = this.props;
 
     return (
         <div className="dash-panel-wishlist" style={styles.listPanel}>
@@ -83,7 +81,7 @@ function mapStateToProps({books,user}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {removeBookFromUserLibraryAndDB}, dispatch);
+      {removeBook}, dispatch);
 }
 
 
