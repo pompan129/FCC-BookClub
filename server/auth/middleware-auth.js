@@ -59,7 +59,7 @@ exports.JWTauth = function(req, res, next){
   try {
     const decoded = jwt.decode(token, env.SECRET);
     console.log("JWTauth:",decoded);//todo
-    req.user = decoded;
+    req.auth = true;
     next();
   }
   catch (err) {

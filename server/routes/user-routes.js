@@ -36,20 +36,18 @@ module.exports = function(app){
 
   //update user info
   app.post('/api/user/update',Authenticate.JWTauth,(req,resp)=>{
-    const {email,address} = req.body;
-    console.log('update:', req.body);
-
-    /*
-    if(username == req.user.username){
-      User.where({username}).update({email,address},(err, writeOpResult)=>{
-        if(err){resp.send(err);}
-        resp.send(writeOpResult);
+    const {email,address,username} = req.body;
+    console.log('update:', req.body,req.auth);//todo
+    if(req.auth){
+      User.findOneAndUpdate({username}, { email,address},{new: true}).select({ password: 0}).exec((err,user)=>{
+        if(err){
+          resp.send(new Error("Error updateing User"));
+        }else{
+          resp.send({msg:'success',user});
+        }
       })
     }else{
       resp.send(new Error("Error!-token/username mismatch"));
     }
-    */
   })
-
-
 }

@@ -61,6 +61,7 @@ class DashBoard extends React.Component {
 
     const { value } = this.state;
     const {username,email,address} = this.props.user;
+    const {street,city,state,zip} = address || {};
     const {books} = this.props.books;
     const userLibraryList = books?books.filter(book=>book.owner === username):[];
     const wishList = books?books.filter(book=>book.rq_status.rq_by === username &&
@@ -82,7 +83,11 @@ class DashBoard extends React.Component {
         <div className="dashboard-profile" style={styles.profile}>
           {username && <Typography type="display3" align="left">{username}</Typography>}
           {email && <Typography type="title" align="left">{email}</Typography>}
-          {address && <Typography type="title" align="left">{address}</Typography>}
+          {street && <Typography type="title" align="left">{street}</Typography>}
+          {city && <Typography type="title" align="left">{city}</Typography>}
+          {state && <Typography type="title" align="left">{state}</Typography>}
+          {zip && <Typography type="title" align="left">{zip}</Typography>}
+
           <Button raised color="accent"   onClick={()=>{this.props.renderModal(true,'edit-user')}}>
             <EditIcon />
           </Button>

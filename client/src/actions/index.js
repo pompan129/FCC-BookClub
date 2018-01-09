@@ -195,27 +195,24 @@ export const editUser = (username,email,street,city,zip,state,successCallback)=>
     Axios({
       method: 'post',
       url: '/api/user/update',
-      data: { username,address},
+      data: { username,address,email},
       headers:{"Authorization":"Bearer " + token}
     })
-    //Axios.post('/api/user/update',{username,password,email})
       .then((resp)=>{
         console.log("editUser",resp);
-        /*successCallback();
         const batch = [];
-        batch.push(setAuthentication(true));
-        batch.push(setUsername(username));//todo
+        batch.push(setUser(resp.data.user));//todo
         batch.push(renderModal(false,''));
         batch.push(fecthDone());
-        localStorage.setItem('jwt', resp.data.token);//JWT in localstorage for protected routes
-        dispatch(batchActions(batch));*/
+        dispatch(batchActions(batch));
       })
       .catch((err)=>{
-        console.log("editUser", err.response.data.error);//todo
-        //dispatch(setAuthenticationError(err.response.data.error));
+        console.log("editUser", err);//todo
+        dispatch(setAuthenticationError("unable to update user"));
       })
   }
 }
+
 //book actions------------------------------------------------
 
 export const setBooks=(books)=>{
