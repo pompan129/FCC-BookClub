@@ -21,10 +21,10 @@ const styles = {
     padding:'0 .5rem'
   },
   title:{
-        whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis',
-        overflow: 'hidden',
-        width:'14rem'
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    width:'14rem'
   },
   subheader:{
     whiteSpace: 'nowrap',

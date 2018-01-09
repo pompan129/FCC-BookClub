@@ -3,13 +3,16 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 //actions
-import {removeBookFromWishlist,fetchBooks} from '../actions';
+import {removeBookFromWishlist,
+  approveTrade,
+  fetchBooks} from '../actions';
 
 //components
 import Book from "./book-card";
+import FooterButtons from './book-card-footer-buttons'
 
 //material UI components todo
-import Button from 'material-ui/Button';
+//import Button from 'material-ui/Button';
 
 //assets
 import DeleteIcon from 'material-ui-icons/Delete';
@@ -36,29 +39,14 @@ class WishListPanel extends React.Component {
     if(!this.props.books.books){this.props.fetchBooks();}
   }
 
-  handleChange = (event) => {
-    this.setState({ term:event.target.value });
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const {term} = this.state;
-    this.props.searchBooks(term);
-  };
-
-
-    getFooter = (book)=>{
-      return {
-        icon: <span>
-          <Button color='contrast'>Confirm</Button>
-          <Button color='accent'>Reject</Button>
-          </span>,
-        active:false,
-        //action:()=>this.props.removeBookFromWishlist(book._id),
-        backgroundColor:'',
-        backgroundColorOver:Red[300]
-      }
+  getFooter = (book)=>{
+    return {
+      icon: <FooterButtons
+        handleClickReject={()=>this.props.approveTrade(book,false)}
+        handleClickApprove={()=>this.props.approveTrade(book,true)}
+        />,
     }
+  }
 
   render(){
     console.log(this.state.term);//todo
@@ -88,7 +76,7 @@ function mapStateToProps({books,user}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {removeBookFromWishlist,fetchBooks}, dispatch);
+      {removeBookFromWishlist,fetchBooks,approveTrade}, dispatch);
 }
 
 

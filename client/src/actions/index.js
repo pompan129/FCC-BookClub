@@ -184,32 +184,38 @@ export const logout=()=>{
   localStorage.setItem('jwt','');//JWT in localstorage for protected routes
   return batchActions(batch);
 }
-/*
-export const updateUserLibrary=(user)=>{
-  return {
-      type: UPDATE_USER_LIBRARY,
-      payload: user.book_ids
-    }
-}
-*/
-export const removeBookFromWishlist = (bookid)=>{
 
-  return (dispatch, getState) => {
+//thunk
+export const editUser = (username,email,street,city,zip,state,successCallback)=>{
+  return (dispatch,getstate)=>{
+
     dispatch(fecthStart());//start spinner
-    Axios.post('/api/booklist/update/status',{id:bookid,rq_status:{rq_state:"available"}})
-      .then(resp=>{
-        console.log("removeBookFromWishlist:SUCCESS",resp);//todo  test
-        dispatch(fetchBooks());
-        dispatch(fecthDone());
+    const address = {street,city,zip,state};
+    const token = localStorage.getItem("jwt");
+    Axios({
+      method: 'post',
+      url: '/api/user/update',
+      data: { username,address},
+      headers:{"Authorization":"Bearer " + token}
+    })
+    //Axios.post('/api/user/update',{username,password,email})
+      .then((resp)=>{
+        console.log("editUser",resp);
+        /*successCallback();
+        const batch = [];
+        batch.push(setAuthentication(true));
+        batch.push(setUsername(username));//todo
+        batch.push(renderModal(false,''));
+        batch.push(fecthDone());
+        localStorage.setItem('jwt', resp.data.token);//JWT in localstorage for protected routes
+        dispatch(batchActions(batch));*/
       })
       .catch((err)=>{
-        console.log("requestTrade:ERROR", err.response.data.error);//todo
-        dispatch(batchActions([setAuthenticationError(err.response.data.error),fecthDone()]));
+        console.log("editUser", err.response.data.error);//todo
+        //dispatch(setAuthenticationError(err.response.data.error));
       })
   }
 }
-
-
 //book actions------------------------------------------------
 
 export const setBooks=(books)=>{
@@ -245,8 +251,6 @@ export const fetchBooks = ()=>{
         })
   }
 }
-
-
 
 //set google books search result in redux store
 export const setSearchResult=(books)=>{
@@ -295,6 +299,50 @@ export const requestTrade = (bookid,username)=>{
   }
 }
 
+//thunk
+export const approveTrade = (book,approved,username)=>{
+  console.log("approveOrRejectTrade",book,username,approved);//todo
+
+  return (dispatch, getState) => {
+    const rq_status = approved?{...book.rq_status,rq_state:"traded"}
+      :{rq_state:"available"};
+
+    dispatch(fecthStart());//start spinner
+
+    Axios.post('/api/booklist/update/status',{id:book._id,rq_status})
+      .then(resp=>{
+        console.log("approveTrade:SUCCESS",resp);//todo  test
+        dispatch(fetchBooks());
+        dispatch(fecthDone());
+      })
+      .catch((err)=>{
+        console.log("approveTrade:ERROR", err.response.data.error);//todo
+        dispatch(batchActions([setAuthenticationError(err.response.data.error),fecthDone()]));
+      })
+  }
+}
+
+export const returnBook = (book)=>{
+  console.log("returnBook",book);//todo
+
+  return (dispatch, getState) => {
+    const rq_status = {rq_state:"available"}
+
+    dispatch(fecthStart());//start spinner
+
+    Axios.post('/api/booklist/update/status',{id:book._id,rq_status})
+      .then(resp=>{
+        console.log("returnBook:SUCCESS",resp);//todo  test
+        dispatch(fetchBooks());
+        dispatch(fecthDone());
+      })
+      .catch((err)=>{
+        console.log("returnBook:ERROR", err.response.data.error);//todo
+        dispatch(batchActions([setAuthenticationError(err.response.data.error),fecthDone()]));
+      })
+  }
+}
+
 //add book to DB for user
 export const addBook = (book,username)=>{
   return (dispatch, getState) => {
@@ -306,6 +354,32 @@ export const addBook = (book,username)=>{
       .catch((err)=>{
         console.log("addBook", err.response.data.error);//todo
         dispatch(setAuthenticationError(err.response.data.error));
+      })
+  }
+}
+
+/*
+export const updateUserLibrary=(user)=>{
+  return {
+      type: UPDATE_USER_LIBRARY,
+      payload: user.book_ids
+    }
+}
+*/
+
+export const removeBookFromWishlist = (bookid)=>{
+
+  return (dispatch, getState) => {
+    dispatch(fecthStart());//start spinner
+    Axios.post('/api/booklist/update/status',{id:bookid,rq_status:{rq_state:"available"}})
+      .then(resp=>{
+        console.log("removeBookFromWishlist:SUCCESS",resp);//todo  test
+        dispatch(fetchBooks());
+        dispatch(fecthDone());
+      })
+      .catch((err)=>{
+        console.log("requestTrade:ERROR", err.response.data.error);//todo
+        dispatch(batchActions([setAuthenticationError(err.response.data.error),fecthDone()]));
       })
   }
 }

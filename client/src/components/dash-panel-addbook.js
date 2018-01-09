@@ -15,7 +15,7 @@ import TextField from 'material-ui/TextField';
 //assets
 import AddIcon from 'material-ui-icons/Add';
 import CheckIcon from 'material-ui-icons/Check';
-import Cyan from 'material-ui/colors/cyan';
+//import Cyan from 'material-ui/colors/cyan';
 import lightGreen from 'material-ui/colors/lightGreen';
 
 //styles
@@ -26,6 +26,22 @@ const styles = {
   }
 }
 
+const footerTheme = {
+  disabled: outerTheme => ({
+    ...outerTheme,
+    footer: {
+      backgroundColor:lightGreen[300],
+    },
+  }),
+  available: outerTheme => ({
+    ...outerTheme,
+    footer: {
+      hovercolor: 'white',
+      hoverBackgroundColor: outerTheme.palette.secondary[300],
+      cursor:'pointer'
+    },
+  }),
+}
 
 class AddBookPanel extends React.Component {
 
@@ -44,29 +60,27 @@ class AddBookPanel extends React.Component {
   };
 
 
-    getFooter = (book)=>{
-      const {selfLink}=book;
-      const {username}=this.props.user;
+  getFooter = (book)=>{
+    const {selfLink}=book;
+    const {username}=this.props.user;
 
-      if(this.props.userlistIDs.includes(selfLink)){
-        return {
-          icon:<CheckIcon/>,
-          text:"In Your Library",
-          active:false,
-          action:undefined,
-          backgroundColor:lightGreen['A700'],
-          backgroundColorOver:''
-        }
-      }
+    if(this.props.userlistIDs.includes(selfLink)){
       return {
-        icon:<AddIcon/>,
-        text:"Add to Your Library",
-        active:true,
-        action:()=>{this.props.addBook(book,username)},
-        backgroundColor:'transparent',
-        backgroundColorOver:Cyan['A400']
+        icon:<CheckIcon/>,
+        text:"In Your Library",
+        active:false,
+        action:undefined,
+        theme: footerTheme.disabled
       }
     }
+    return {
+      icon:<AddIcon/>,
+      text:"Add to Your Library",
+      active:true,
+      action:()=>{this.props.addBook(book,username)},
+      theme:footerTheme.available
+    }
+  }
 
   render(){
     console.log(this.state.term)

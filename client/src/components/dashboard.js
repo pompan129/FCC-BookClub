@@ -3,9 +3,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router'
 
-
 //actions
-import {fetchBooks} from '../actions';
+import {fetchBooks,renderModal} from '../actions';
 
 //components
 import RootPage from "./root-page";
@@ -13,6 +12,8 @@ import AddBookPanel from "./dash-panel-addbook";
 import UserLibraryPanel from "./dash-panel-userlibrary";
 import WishlistPanel from "./dash-panel-wishlist";
 import RequestedBooksPanel from "./dash-panel-requestedbooks";
+import LoanedBooksPanel from "./dash-panel-loanedbooks";
+import BorrowedBooksPanel from "./dash-panel-borrowedbooks";
 //material UI components
 import Tabs, { Tab } from 'material-ui/Tabs';
 import TabContainer from './tab-container';
@@ -59,13 +60,17 @@ class DashBoard extends React.Component {
     if(!this.props.user.authenticated){return <Redirect to='/'/>}
 
     const { value } = this.state;
-    const {username,email} = this.props.user;
+    const {username,email,address} = this.props.user;
     const {books} = this.props.books;
-    const userList = books?books.filter(book=>book.owner === username):[];
+    const userLibraryList = books?books.filter(book=>book.owner === username):[];
     const wishList = books?books.filter(book=>book.rq_status.rq_by === username &&
       book.rq_status.rq_state === "requested"):[];
     const requestList = books?books.filter(book=>book.owner === username &&
       book.rq_status.rq_state === "requested"):[];
+    const loanedList = books?books.filter(book=>book.owner === username &&
+      book.rq_status.rq_state === "traded"):[];
+    const borrowedList = books?books.filter(book=>book.rq_status.rq_by === username &&
+      book.rq_status.rq_state === "traded"):[];
 
 
 
@@ -77,32 +82,33 @@ class DashBoard extends React.Component {
         <div className="dashboard-profile" style={styles.profile}>
           {username && <Typography type="display3" align="left">{username}</Typography>}
           {email && <Typography type="title" align="left">{email}</Typography>}
-          <Button raised color="accent">
+          {address && <Typography type="title" align="left">{address}</Typography>}
+          <Button raised color="accent"   onClick={()=>{this.props.renderModal(true,'edit-user')}}>
             <EditIcon />
           </Button>
         </div>
         <div className="tabs-container" style={styles.tabsContainer}>
             <Tabs value={value} onChange={this.handleChange} style={styles.tabs}>
               <Tab label="Add Book" icon={<AddCircleIcon/>}/>
-              <Tab label="Your Books" icon={userList.length}/>
+              <Tab label="Your Books" icon={userLibraryList.length}/>
               <Tab label="Wishlist" icon={
                   <Badge badgeContent={wishList.length} color="primary">
                     <FavoriteIcon/>
                   </Badge>}
                 />
               <Tab label="Requested" icon={requestList.length}/>
-              <Tab label="Loaned" />
-              <Tab label="Recieved" />
+              <Tab label="Loaned" icon={loanedList.length} />
+              <Tab label="Borrowed" icon={borrowedList.length} />
             </Tabs>
             <Divider />
-          {value === 0 && <TabContainer><AddBookPanel userlistIDs={userList.map(
+          {value === 0 && <TabContainer><AddBookPanel userlistIDs={userLibraryList.map(
             book=>book.selfLink
           )}/></TabContainer>}
-          {value === 1 && <TabContainer><UserLibraryPanel userlist={userList} /></TabContainer>}
+          {value === 1 && <TabContainer><UserLibraryPanel userlist={userLibraryList} /></TabContainer>}
           {value === 2 && <TabContainer><WishlistPanel wishlist={wishList}/></TabContainer>}
           {value === 3 && <TabContainer><RequestedBooksPanel list={requestList}/></TabContainer>}
-          {value === 4 && <TabContainer>Loaned</TabContainer>}
-          {value === 5 && <TabContainer>Recieved</TabContainer>}
+          {value === 4 && <TabContainer><LoanedBooksPanel list={loanedList}/></TabContainer>}
+          {value === 5 && <TabContainer><BorrowedBooksPanel list={borrowedList}/></TabContainer>}
         </div>
       </RootPage>
     )
@@ -115,7 +121,7 @@ function mapStateToProps({books,user,message}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {fetchBooks}, dispatch);
+      {fetchBooks,renderModal}, dispatch);
 }
 
 

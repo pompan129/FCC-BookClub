@@ -23,6 +23,16 @@ const styles = {
   }
 }
 
+const footerTheme = {
+  remove: outerTheme => ({
+    ...outerTheme,
+    footer: {
+      hovercolor: 'white',
+      hoverBackgroundColor:Red[300],
+      cursor:'pointer',
+    },
+  }),
+}
 
 class Libray extends React.Component {
 
@@ -49,8 +59,7 @@ class Libray extends React.Component {
         text:"Remove From Your Library",
         active:true,
         action:()=>this.props.removeBook(book._id,username),
-        backgroundColor:'',
-        backgroundColorOver:Red[300]
+        theme:footerTheme.remove
       }
     }
 

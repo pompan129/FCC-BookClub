@@ -3,15 +3,19 @@ import { withStyles,MuiThemeProvider } from 'material-ui/styles';
 
 
 const Styles = (theme)=>{
-  console.log("THEME: ",theme);
+  //console.log("THEME: ",theme); //todo
   return {
   main:{
     width: '100%',
     height: '100%',
     position:'relative',
-    '&:hover': {backgroundColor:theme.footer.color}//{backgroundColor:'green'}//
-    //cursor: props.active?'pointer':'auto',
-    //backgroundColor:props.backgroundColor
+    cursor: theme.footer.cursor,
+    color:theme.footer.color,
+    backgroundColor:theme.footer.backgroundColor,
+    '&:hover': {
+      backgroundColor:theme.footer.hoverBackgroundColor,
+      color:theme.footer.hovercolor
+    }
   },
   span:{
     position:'absolute',
@@ -20,14 +24,18 @@ const Styles = (theme)=>{
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     display:'flex',
-    alignItems:'center'
+    justifyContent:'center',
+    alignItems:'center',
+    width:'100%',
+    height:'100%'
   }
 }}
 
 const theme3 = outerTheme => ({
   ...outerTheme,
   footer: {
-    color: 'pink',
+    hovercolor: 'pink',
+    cursor:'pointer'
   },
 });
 

@@ -7,10 +7,9 @@ import { CircularProgress } from 'material-ui/Progress';
     top: `50%`,
     left: `50%`,
     transform: `translate(-50%, -50%)`,
-    backgroundColor: 'rgba(0, 0, 0, .5)',
+    backgroundColor: 'rgba(0, 0, 0, .05)',
     padding: '.5rem',
     borderRadius:'50%'
-
   }};
 
 const Spinner = (props)=>{

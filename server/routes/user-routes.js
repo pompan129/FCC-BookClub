@@ -34,20 +34,21 @@ module.exports = function(app){
       });
   })
 
-
-
   //update user info
   app.post('/api/user/update',Authenticate.JWTauth,(req,resp)=>{
-    const {username,email,fullname,Address,book_ids,wishlist,auth_type} = req.body;
+    const {email,address} = req.body;
+    console.log('update:', req.body);
+
+    /*
     if(username == req.user.username){
-      User.where({username}).update({email,fullname,Address,book_ids,wishlist,auth_type},(err, writeOpResult)=>{
+      User.where({username}).update({email,address},(err, writeOpResult)=>{
         if(err){resp.send(err);}
         resp.send(writeOpResult);
       })
     }else{
       resp.send(new Error("Error!-token/username mismatch"));
     }
-
+    */
   })
 
 

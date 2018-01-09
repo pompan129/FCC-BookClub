@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 //actions
-import {removeBookFromWishlist,fetchBooks} from '../actions';
+import {fetchBooks} from '../actions';
 
 //components
 import Book from "./book-card";
@@ -32,7 +32,7 @@ const footerTheme = {
     },
   }),
 }
-class WishListPanel extends React.Component {
+class LoanedPanel extends React.Component {
 
   state = {
     term: '',
@@ -45,7 +45,7 @@ class WishListPanel extends React.Component {
   getFooter = (book)=>{
     return {
       icon:<DeleteIcon/>,
-      text:"Remove From Wishlist",
+      text:"Request Book Return",
       active:true,
       action:()=>this.props.removeBookFromWishlist(book._id),
       theme:footerTheme.remove
@@ -54,12 +54,12 @@ class WishListPanel extends React.Component {
 
   render(){
     console.log(this.state.term);//todo
-    const {user,wishlist} = this.props;
+    const {user,list} = this.props;
     const {books} = this.props.books
 
     return (
         <div className="dash-panel-wishlist" style={styles.listPanel}>
-          {wishlist.map((book,index)=>{
+          {list.map((book,index)=>{
 
               const footer = this.getFooter(book);
 
@@ -80,8 +80,8 @@ function mapStateToProps({books,user}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {removeBookFromWishlist,fetchBooks}, dispatch);
+      {fetchBooks}, dispatch);
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(WishListPanel)
+export default connect(mapStateToProps,mapDispatchToProps)(LoanedPanel)

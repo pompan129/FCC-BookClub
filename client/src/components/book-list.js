@@ -27,19 +27,27 @@ const styles = {
   }
 }
 
-const footerTheme = outerTheme => ({
-  ...outerTheme,
-  footer: {
-    color: 'orange',
-  },
-});
-
-
+const footerTheme = {
+  disabled: outerTheme => ({
+    ...outerTheme,
+    footer: {
+      backgroundColor:outerTheme.palette.grey[200]
+    },
+  }),
+  available: outerTheme => ({
+    ...outerTheme,
+    footer: {
+      hovercolor: 'white',
+      hoverBackgroundColor:outerTheme.palette.secondary[300],
+      cursor:'pointer'
+    },
+  }),
+}
 
 class BookList extends React.Component {
 
   componentDidMount=()=>{
-    this.props.setHeaderMessage({title:"Browse Books",sub:"Click on a title to trade"})
+    //this.props.setHeaderMessage({title:"Browse Books",sub:"Click on an available title to trade"})
     this.props.fetchBooks();
   }
 
@@ -52,8 +60,7 @@ class BookList extends React.Component {
         text:"Login to Trade Books",
         active:false,
         action:undefined,
-        backgroundColor:blueGrey[100],
-        backgroundColorOver:undefined
+        theme:footerTheme.disabled
       }
     }
     if(rq_status.rq_state === "available"){
@@ -64,7 +71,7 @@ class BookList extends React.Component {
         action:()=>this.props.requestTrade(_id, this.props.user.username),
         backgroundColor:'',
         backgroundColorOver:Cyan['A400'],
-        theme:footerTheme
+        theme:footerTheme.available
       }
     }
     if(rq_status.rq_state === "requested"){
@@ -73,8 +80,8 @@ class BookList extends React.Component {
         text:"Trade Pending",
         active:false,
         action:undefined,
-        backgroundColor:blueGrey[100],
-        backgroundColorOver:undefined
+        theme:footerTheme.disabled
+
       }
     }
   }
@@ -85,7 +92,7 @@ class BookList extends React.Component {
     return (
       <Root name="book-list-root"
         title="Browse Books"
-        subtitle="click on a book to make a trade"
+        subtitle="click on an available book to make a trade"
         fetching={message.fetching}
         >
           <div className="book-list" style={styles.list}>

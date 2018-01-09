@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 //actions
-import {removeBookFromWishlist,fetchBooks} from '../actions';
+import {fetchBooks,returnBook} from '../actions';
 
 //components
 import Book from "./book-card";
@@ -11,7 +11,7 @@ import Book from "./book-card";
 
 //assets
 import DeleteIcon from 'material-ui-icons/Delete';
-import Red from 'material-ui/colors/red';
+import Cyan from 'material-ui/colors/cyan';
 
 //styles
 const styles = {
@@ -23,16 +23,16 @@ const styles = {
 }
 
 const footerTheme = {
-  remove: outerTheme => ({
+  return: outerTheme => ({
     ...outerTheme,
     footer: {
       hovercolor: 'white',
-      hoverBackgroundColor:Red[300],
+      hoverBackgroundColor:Cyan[300],
       cursor:'pointer',
     },
   }),
 }
-class WishListPanel extends React.Component {
+class LoanedPanel extends React.Component {
 
   state = {
     term: '',
@@ -45,21 +45,21 @@ class WishListPanel extends React.Component {
   getFooter = (book)=>{
     return {
       icon:<DeleteIcon/>,
-      text:"Remove From Wishlist",
+      text:"Return Book",
       active:true,
-      action:()=>this.props.removeBookFromWishlist(book._id),
-      theme:footerTheme.remove
+      action:()=>this.props.returnBook(book),
+      theme:footerTheme.return
     }
   }
 
   render(){
     console.log(this.state.term);//todo
-    const {user,wishlist} = this.props;
+    const {user,list} = this.props;
     const {books} = this.props.books
 
     return (
         <div className="dash-panel-wishlist" style={styles.listPanel}>
-          {wishlist.map((book,index)=>{
+          {list.map((book,index)=>{
 
               const footer = this.getFooter(book);
 
@@ -80,8 +80,8 @@ function mapStateToProps({books,user}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {removeBookFromWishlist,fetchBooks}, dispatch);
+      {fetchBooks,returnBook}, dispatch);
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(WishListPanel)
+export default connect(mapStateToProps,mapDispatchToProps)(LoanedPanel)

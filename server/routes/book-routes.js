@@ -131,11 +131,10 @@ module.exports = function(app){
           console.log(err);
           return res.send(err);
         }
-
           res.send ({writeOpResult,msg:"success!"});//todo
       })
-
     })
+
 
 
 }

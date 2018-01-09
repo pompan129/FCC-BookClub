@@ -11,6 +11,7 @@ import Home from './components/home';
 import DashBoard from './components/dashboard';
 import SignUpModal from './components/signup';
 import SignInModal from './components/signin';
+import EditUserDialogue from './components/edit-user-dialogue';
 import Cyan from 'material-ui/colors/cyan';
 import blueGrey from 'material-ui/colors/blueGrey';
 import red from 'material-ui/colors/red';
@@ -23,10 +24,8 @@ import './App.css';
 
 const theme = createMuiTheme({
   palette: {
-    primary: blueGrey,
-    secondary: {
-      ...Cyan
-    },
+    primary: {...blueGrey},
+    secondary: {...Cyan},
     error: red,
   },
 });
@@ -67,6 +66,7 @@ class App extends Component {
           </Switch>
           <SignUpModal />
           <SignInModal />
+          <EditUserDialogue />
         </div>
       </MuiThemeProvider>
     );
