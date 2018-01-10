@@ -14,7 +14,7 @@ class EditUserDialogue extends React.Component {
        super(props);
 
        const {user} = props;
-       const {email} = user;
+       const {email,name} = user;
        const {street,city,state,zip} = user.address || {};
 
        this.state = {
@@ -22,6 +22,7 @@ class EditUserDialogue extends React.Component {
         error: ``,
         username:user.username,
         email:email || '',
+        name:name || '',
         street:street || '',
         city:city || '',
         state:state || '',
@@ -33,7 +34,7 @@ class EditUserDialogue extends React.Component {
 
    componentWillReceiveProps(nextProps){
      const {user} = nextProps;
-     const {email} = user;
+     const {email,name} = user;
      const {street,city,state,zip} = user.address || {};
 
        //console.log("EditUserDialogue-componentWillReceiveProps", 'PROPS:',nextProps,'STATE:',this.state,"user.email",user.email);//todo
@@ -41,6 +42,7 @@ class EditUserDialogue extends React.Component {
        open:nextProps.modal.visible && (nextProps.modal.modal_type === 'edit-user'),
        username:user.username,
        email:email || '',
+       name:name || '',
        street:street || '',
        city:city || '',
        state:state || '',
@@ -77,6 +79,14 @@ class EditUserDialogue extends React.Component {
               type="email"
               value={this.state.email}
               onChange={this.handleInputChange("email")}
+              margin="normal"
+            /><br/>
+            <TextField
+              id="name"
+              label="name"
+              type="name"
+              value={this.state.name}
+              onChange={this.handleInputChange("name")}
               margin="normal"
             /><br/>
             <TextField

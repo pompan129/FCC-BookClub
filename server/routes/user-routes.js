@@ -36,10 +36,10 @@ module.exports = function(app){
 
   //update user info
   app.post('/api/user/update',Authenticate.JWTauth,(req,resp)=>{
-    const {email,address,username} = req.body;
+    const {email,name,address,username} = req.body;
     console.log('update:', req.body,req.auth);//todo
     if(req.auth){
-      User.findOneAndUpdate({username}, { email,address},{new: true}).select({ password: 0}).exec((err,user)=>{
+      User.findOneAndUpdate({username}, { email,name,address},{new: true}).select({ password: 0}).exec((err,user)=>{
         if(err){
           resp.send(new Error("Error updateing User"));
         }else{
