@@ -32,11 +32,11 @@ class EditUserDialogue extends React.Component {
    }
 
    componentWillReceiveProps(nextProps){
-     const {modal,user} = nextProps;
+     const {user} = nextProps;
      const {email} = user;
      const {street,city,state,zip} = user.address || {};
 
-       console.log("EditUserDialogue-componentWillReceiveProps", 'PROPS:',nextProps,'STATE:',this.state,"user.email",user.email);//todo
+       //console.log("EditUserDialogue-componentWillReceiveProps", 'PROPS:',nextProps,'STATE:',this.state,"user.email",user.email);//todo
      this.setState({
        open:nextProps.modal.visible && (nextProps.modal.modal_type === 'edit-user'),
        username:user.username,
@@ -62,7 +62,7 @@ class EditUserDialogue extends React.Component {
   }
 
   render() {
-    console.log("EditUserDialogue", 'PROPS:',this.props,'STATE:',this.state);//todo
+    //console.log("EditUserDialogue", 'PROPS:',this.props,'STATE:',this.state);//todo
     //const open = this.props.modal.visible && (this.props.modal.modal_type == 'signin')
 
     return (

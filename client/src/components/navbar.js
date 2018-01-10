@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 
 //material UI components
@@ -33,6 +34,8 @@ const Navbar = (props)=>{
     }
   };
 
+  //console.log('Navbar',props);//todo
+
   return (/*<FontIcon className="muidocs-icon-custom-sort" />*///todo
 
     <AppBar>
@@ -50,7 +53,7 @@ const Navbar = (props)=>{
               onClick={()=>{props.renderModal(true,'signin')}}
               style={styles.button}>Login</Button>}
             {props.authenticated && <Button label="Logout"
-              onClick={props.logout}
+              onClick={()=>props.logout(props.history)}
               style={styles.button}>Logout</Button>}
           </div>
         </Toolbar>
@@ -59,4 +62,4 @@ const Navbar = (props)=>{
   )
 }
 
-export default Navbar;
+export default withRouter(Navbar);

@@ -1,5 +1,4 @@
 import React from "react";
-import Root from "./root-page";
 import { withStyles } from 'material-ui/styles';
 import { fade } from 'material-ui/styles/colorManipulator';
 

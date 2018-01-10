@@ -176,12 +176,13 @@ export const signup = (username,password,email,successCallback)=>{
 }
 
 //log user out
-export const logout=()=>{
+export const logout=(history)=>{
   console.log('action:logout');//todo
   const batch = [];
   batch.push(setAuthentication(false));
   batch.push(setUsername(""));
   localStorage.setItem('jwt','');//JWT in localstorage for protected routes
+  history.push('/');
   return batchActions(batch);
 }
 

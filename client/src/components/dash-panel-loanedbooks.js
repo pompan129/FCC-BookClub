@@ -54,8 +54,7 @@ class LoanedPanel extends React.Component {
 
   render(){
     console.log(this.state.term);//todo
-    const {user,list} = this.props;
-    const {books} = this.props.books
+    const {list} = this.props;
 
     return (
         <div className="dash-panel-wishlist" style={styles.listPanel}>

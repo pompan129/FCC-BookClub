@@ -6,6 +6,7 @@ import Dialog,
        DialogContent,
        DialogActions} from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
+import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import { renderModal,signin} from '../actions';
 
@@ -46,14 +47,11 @@ class SignInModal extends React.Component {
 
 
   render() {
-    //console.log("SignInModal", this.props,this.state, this.props.visible &&
-      //(this.props.modal_type == 'signin'));//todo
-    //const open = this.props.modal.visible && (this.props.modal.modal_type == 'signin')
 
     return (
         <Dialog open={this.state.open}
           onClose={()=>{this.props.renderModal(false,'')}}>
-          <DialogTitle>This is the signIN modal</DialogTitle>
+          <DialogTitle>Sign In</DialogTitle>
           <DialogContent>
             <TextField
             id="username"
@@ -72,9 +70,17 @@ class SignInModal extends React.Component {
           /><br/>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleSubmit}>Submit</Button>
-            <Button onClick={()=>this.props.renderModal(false,'')}>Cancel</Button>
+            <Button onClick={this.handleSubmit} color='primary'>Submit</Button>
+            <Button onClick={()=>this.props.renderModal(false,'')} color='accent'>Cancel</Button>
           </DialogActions>
+          <Divider/>
+          <div>Or
+            <a
+              onClick={()=>this.props.renderModal(true,'signup')}>
+                 Sign Up
+            </a>
+            to start your new account
+           </div>
         </Dialog>
     );
   }

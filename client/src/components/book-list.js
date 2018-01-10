@@ -15,7 +15,6 @@ import Root from "./root-page";
 import FavoriteIcon from 'material-ui-icons/Favorite';
 import ImportExportIcon from 'material-ui-icons/ImportExport';
 import Cyan from 'material-ui/colors/cyan';
-import blueGrey from 'material-ui/colors/blueGrey';
 
 //styles
 const styles = {

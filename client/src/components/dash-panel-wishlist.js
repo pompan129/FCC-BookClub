@@ -54,8 +54,7 @@ class WishListPanel extends React.Component {
 
   render(){
     console.log(this.state.term);//todo
-    const {user,wishlist} = this.props;
-    const {books} = this.props.books
+    const {wishlist} = this.props;
 
     return (
         <div className="dash-panel-wishlist" style={styles.listPanel}>

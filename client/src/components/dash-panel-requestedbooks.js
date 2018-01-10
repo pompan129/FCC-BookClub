@@ -12,12 +12,8 @@ import Book from "./book-card";
 import FooterButtons from './book-card-footer-buttons'
 
 //material UI components todo
-//import Button from 'material-ui/Button';
 
 //assets
-import DeleteIcon from 'material-ui-icons/Delete';
-import Green from 'material-ui/colors/green';
-import Red from 'material-ui/colors/red';
 
 //styles
 const styles = {
@@ -50,8 +46,7 @@ class WishListPanel extends React.Component {
 
   render(){
     console.log(this.state.term);//todo
-    const {user,list} = this.props;
-    const {books} = this.props.books
+    const {list} = this.props;
 
     return (
         <div className="dash-panel-wishlist" style={styles.listPanel}>

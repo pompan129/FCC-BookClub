@@ -1,7 +1,7 @@
 import {SET_BOOKS,SET_BOOKS_ERROR,SET_SEARCH_RESULT,ADD_BOOK_LOCAL} from "../actions";
 
 export default function (state={}, action) {
-    console.log("books_reducer:",state,action);
+    //console.log("books_reducer:",state,action);  //todo
     switch (action.type) {
         case SET_BOOKS:
           return {...state,books:action.payload};

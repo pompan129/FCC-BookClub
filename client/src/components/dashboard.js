@@ -1,12 +1,12 @@
 import React from "react";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { Redirect } from 'react-router'
 
 //actions
 import {fetchBooks,renderModal} from '../actions';
 
 //components
+import NoAuthPage from "./no-auth-page";
 import RootPage from "./root-page";
 import AddBookPanel from "./dash-panel-addbook";
 import UserLibraryPanel from "./dash-panel-userlibrary";
@@ -44,7 +44,7 @@ const styles = {
 
 class DashBoard extends React.Component {
   state = {
-    value: 0
+    value: Number(localStorage.getItem('tabValue'))
   };
 
   componentDidMount=()=>{
@@ -53,13 +53,17 @@ class DashBoard extends React.Component {
 
   handleChange = (event,value) => {
     this.setState({ value });
+    localStorage.setItem('tabValue',value);
   };
 
 
   render(){
-    if(!this.props.user.authenticated){return <Redirect to='/'/>}
+    if(!this.props.user.authenticated){return <NoAuthPage/>}
 
     const { value } = this.state;
+
+    console.log('DashBoard',this.props,this.state,'value=',value);//todo
+
     const {username,email,address} = this.props.user;
     const {street,city,state,zip} = address || {};
     const {books} = this.props.books;
@@ -93,9 +97,13 @@ class DashBoard extends React.Component {
           </Button>
         </div>
         <div className="tabs-container" style={styles.tabsContainer}>
-            <Tabs value={value} onChange={this.handleChange} style={styles.tabs}>
-              <Tab label="Add Book" icon={<AddCircleIcon/>}/>
+            <Tabs value={value}
+              indicatorColor="primary"
+              textColor="primary"
+              onChange={this.handleChange}
+              style={styles.tabs}>
               <Tab label="Your Books" icon={userLibraryList.length}/>
+              <Tab label="Add Book" icon={<AddCircleIcon/>}/>
               <Tab label="Wishlist" icon={
                   <Badge badgeContent={wishList.length} color="primary">
                     <FavoriteIcon/>
@@ -106,10 +114,10 @@ class DashBoard extends React.Component {
               <Tab label="Borrowed" icon={borrowedList.length} />
             </Tabs>
             <Divider />
-          {value === 0 && <TabContainer><AddBookPanel userlistIDs={userLibraryList.map(
+          {value === 0 && <TabContainer><UserLibraryPanel userlist={userLibraryList} /></TabContainer>}
+          {value === 1 && <TabContainer><AddBookPanel userlistIDs={userLibraryList.map(
             book=>book.selfLink
           )}/></TabContainer>}
-          {value === 1 && <TabContainer><UserLibraryPanel userlist={userLibraryList} /></TabContainer>}
           {value === 2 && <TabContainer><WishlistPanel wishlist={wishList}/></TabContainer>}
           {value === 3 && <TabContainer><RequestedBooksPanel list={requestList}/></TabContainer>}
           {value === 4 && <TabContainer><LoanedBooksPanel list={loanedList}/></TabContainer>}
