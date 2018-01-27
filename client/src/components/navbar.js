@@ -16,10 +16,9 @@ const Navbar = (props)=>{
   const styles = {
     button: {
       margin: '0 .25em',
-      backgroundColor:'accent'
     },
     toolbar:{
-      backgroundColor:'primary',
+      backgroundColor:'#0D47A1',
       justifyContent:'space-between'
     },
     img:{

@@ -43,13 +43,8 @@ const Footer = (props)=>{
   const {classes} = props;
   return(
       <div className={classes.main}
-        onClick={props.active?props.action:undefined}
-      /*  onMouseEnter={!props.active?undefined:
-          ({target})=>target.style.backgroundColor = props.backgroundColorOver}
-        onMouseLeave={!props.active?undefined:
-          ({target})=>target.style.backgroundColor = props.backgroundColor}*/
-        >
-        <span className={classes.span}>{props.children}</span>
+        onClick={props.active?props.action:undefined}>
+        <span className={classes.span}>{props.children}></span>
       </div>
   )
 }
