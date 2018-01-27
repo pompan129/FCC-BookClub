@@ -16,7 +16,7 @@ const Spinner = (props)=>{
   //console.log("spinning****");//todo
   return(
     <div style={style.backdrop}>
-        <CircularProgress  color="primary" size={100} thickness={10}/>
+        <CircularProgress  color="primary" size={100} thickness={4}/>
     </div>
 
 

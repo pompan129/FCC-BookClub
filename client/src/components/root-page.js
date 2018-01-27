@@ -2,7 +2,6 @@ import React from "react";
 import Spinner from "./spinner";
 
 const Page = (props)=>{
-  //console.log("Root,fetching? ",props.fetching)
   return(
     <div className={props.name}>
       <header className="App-header" >
