@@ -71,7 +71,7 @@ class SignInModal extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleSubmit} color='primary'>Submit</Button>
-            <Button onClick={()=>this.props.renderModal(false,'')} color='error'>Cancel</Button>
+            <Button onClick={()=>this.props.renderModal(false,'')} color='secondary'>Cancel</Button>
           </DialogActions>
           <Divider/>
           <div>Or

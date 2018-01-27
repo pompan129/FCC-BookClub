@@ -4,20 +4,17 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.1",
-    "classnames": "^2.2.5",
     "material-design-icons": "^3.0.1",
-    "material-ui": "^1.0.0-beta.24",
+    "material-ui": "^1.0.0-beta.30",
     "material-ui-icons": "^1.0.0-beta.17",
     "mdi-material-ui": "^3.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
-    "react-svg-logos": "^1.0.1",
     "react-tap-event-plugin": "^3.0.2",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
-    "request": "^2.83.0"
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "react-scripts": "1.0.17"

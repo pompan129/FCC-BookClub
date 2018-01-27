@@ -24,8 +24,18 @@ import './App.css';
 
 const theme = createMuiTheme({
   palette: {
-    primary: {...Blue},
-    secondary: {...Yellow},
+    primary: {
+      light: '#757ce8',
+      main: '#3f50b5',
+      dark: '#002884',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
     error: red,
   },
 });
@@ -54,6 +64,7 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <div className="App">
           <NavBar authenticated={this.props.user.authenticated}
+              history={this.props.history}
               renderModal={this.props.renderModal}
               logout={this.props.logout}></NavBar>
           <Switch>

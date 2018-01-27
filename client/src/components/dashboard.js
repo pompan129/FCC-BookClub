@@ -92,7 +92,7 @@ class DashBoard extends React.Component {
           {state && <Typography type="title" align="left">{state}</Typography>}
           {zip && <Typography type="title" align="left">{zip}</Typography>}
 
-          <Button raised color="accent"   onClick={()=>{this.props.renderModal(true,'edit-user')}}>
+          <Button raised color="secondary"   onClick={()=>{this.props.renderModal(true,'edit-user')}}>
             <EditIcon />
           </Button>
         </div>

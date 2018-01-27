@@ -37,7 +37,7 @@ const footerTheme = {
     ...outerTheme,
     footer: {
       hovercolor: 'white',
-      hoverBackgroundColor:outerTheme.palette.secondary[300],
+      hoverBackgroundColor:outerTheme.palette.primary.light,
       cursor:'pointer'
     },
   }),

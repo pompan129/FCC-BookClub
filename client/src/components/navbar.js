@@ -33,7 +33,7 @@ const Navbar = (props)=>{
     }
   };
 
-  //console.log('Navbar',props);//todo
+  console.log('Navbar',props);//todo
 
   return (/*<FontIcon className="muidocs-icon-custom-sort" />*///todo
 

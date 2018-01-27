@@ -3,7 +3,7 @@ import { withStyles,MuiThemeProvider } from 'material-ui/styles';
 
 
 const Styles = (theme)=>{
-  //console.log("THEME: ",theme); //todo
+  console.log("THEME: ",theme); //todo
   return {
   main:{
     width: '100%',
@@ -44,7 +44,7 @@ const Footer = (props)=>{
   return(
       <div className={classes.main}
         onClick={props.active?props.action:undefined}>
-        <span className={classes.span}>{props.children}></span>
+        <span className={classes.span}>{props.children}</span>
       </div>
   )
 }
