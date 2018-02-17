@@ -15,7 +15,7 @@ exports.signup = function(req, res, next){
     const {username,password,email} = req.body;
 
     if(!username || !password){
-      return res.status(422).send({error:"you must provide a username and password"})
+      return res.status(422).send({error:"must provide a username & password"})
     }
 
     User.findOne({username:username.toLowerCase()},function(err,exists){
@@ -24,7 +24,7 @@ exports.signup = function(req, res, next){
       if(exists){
         console.log("error: USER EXISTS");//todo
         res.status(422);
-         return res.send({ error: 'Email is in use' });
+         return res.send({ error: 'Username in use' });
       }
 
       const newUser = new User({

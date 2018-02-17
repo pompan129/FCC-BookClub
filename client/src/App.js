@@ -25,15 +25,15 @@ import './App.css';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#757ce8',
-      main: '#3f50b5',
-      dark: '#002884',
+      light: '#C5CAE9',
+      main: '#3F51B5',
+      dark: '#303F9F',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
+      light: '#9cff57',
+      main: '#64dd17',
+      dark: '#1faa00',
       contrastText: '#000',
     },
     error: red,

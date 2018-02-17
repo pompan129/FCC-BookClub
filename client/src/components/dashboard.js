@@ -31,13 +31,26 @@ import AddCircleIcon from 'material-ui-icons/AddCircle';
 //styles
 const styles = {
   profile:{
-    margin:'1em 0 0 2.5rem'
+    margin:'2rem 0 0 3rem',
+    position:'relative',
+    border:'1px solid #eee',
+    padding:'1rem',
+    width:'40%',
+    minWidth:'20rem',
+    borderRadius:'1rem'
+  },
+  editButton:{
+    position:'absolute',
+    top: '-1rem',
+    right:'-1rem'
+
   },
   tabsContainer:{
-    margin:'1rem'
+    margin:'1rem',
+    padding:'1rem'
   },
-  tabs:{
-    margin:'.5rem'
+  tab:{
+    paddingTop:'1rem'
   }
 }
 
@@ -62,7 +75,7 @@ class DashBoard extends React.Component {
 
     const { value } = this.state;
 
-    console.log('DashBoard',this.props,this.state,'value=',value);//todo
+    //console.log('DashBoard',this.props,this.state,'value=',value);//todo
 
     const {username,email,address} = this.props.user;
     const {street,city,state,zip} = address || {};
@@ -92,7 +105,9 @@ class DashBoard extends React.Component {
           {state && <Typography type="title" align="left">{state}</Typography>}
           {zip && <Typography type="title" align="left">{zip}</Typography>}
 
-          <Button raised color="secondary"   onClick={()=>{this.props.renderModal(true,'edit-user')}}>
+          <Button fab mini color="secondary"
+            style={styles.editButton}
+            onClick={()=>{this.props.renderModal(true,'edit-user')}}>
             <EditIcon />
           </Button>
         </div>
@@ -102,16 +117,16 @@ class DashBoard extends React.Component {
               textColor="primary"
               onChange={this.handleChange}
               style={styles.tabs}>
-              <Tab label="Your Books" icon={userLibraryList.length}/>
-              <Tab label="Add Book" icon={<AddCircleIcon/>}/>
-              <Tab label="Wishlist" icon={
+              <Tab label="Your Books" style={styles.tab} icon={userLibraryList.length}/>
+              <Tab label="Add Book" style={styles.tab} icon={<AddCircleIcon/>}/>
+              <Tab label="Wishlist" style={styles.tab} icon={
                   <Badge badgeContent={wishList.length} color="primary">
                     <FavoriteIcon/>
                   </Badge>}
                 />
-              <Tab label="Requested" icon={requestList.length}/>
-              <Tab label="Loaned" icon={loanedList.length} />
-              <Tab label="Borrowed" icon={borrowedList.length} />
+              <Tab label="Requested" style={styles.tab} icon={requestList.length}/>
+              <Tab label="Loaned" style={styles.tab} icon={loanedList.length} />
+              <Tab label="Borrowed" style={styles.tab} icon={borrowedList.length} />
             </Tabs>
             <Divider />
           {value === 0 && <TabContainer><UserLibraryPanel userlist={userLibraryList} /></TabContainer>}

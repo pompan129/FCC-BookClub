@@ -3,7 +3,7 @@ import { withStyles,MuiThemeProvider } from 'material-ui/styles';
 
 
 const Styles = (theme)=>{
-  console.log("THEME: ",theme); //todo
+  //console.log("THEME: ",theme); //todo
   return {
   main:{
     width: '100%',

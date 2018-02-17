@@ -162,6 +162,7 @@ export const signup = (username,password,email,successCallback)=>{
         successCallback();
         const batch = [];
         batch.push(setAuthentication(true));
+        batch.push(setAuthenticationError(''));
         batch.push(setUsername(username));//todo
         batch.push(renderModal(false,''));
         batch.push(fecthDone());
@@ -169,8 +170,12 @@ export const signup = (username,password,email,successCallback)=>{
         dispatch(batchActions(batch));
       })
       .catch((err)=>{
-        console.log("signup", err.response.data.error);//todo
-        dispatch(setAuthenticationError(err.response.data.error));
+          console.log("signup", err.response.data.error);//todo
+          const batch = [];
+          batch.push(setAuthenticationError(err.response.data.error));
+          batch.push(fecthDone());
+          batch.push(renderModal(true,'signup'));
+          dispatch( batchActions(batch));
       })
   }
 }

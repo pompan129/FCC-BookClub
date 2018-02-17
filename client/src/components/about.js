@@ -164,8 +164,8 @@ const About = (props)=>{
                 </span>
                 <span styel={{margin:'1rem'}}>
                   <Typography type="body2" gutterBottom>View my portfolio @ </Typography>
-                  <a href="https://s.codepen.io/fazbat/debug/avoEOJ/XxrVwDVjOEZA">
-                  https://s.codepen.io/fazbat/debug/avoEOJ/XxrVwDVjOEZA
+                  <a href="https://codepen.io/fazbat/full/avoEOJ/">
+                  https://codepen.io/fazbat/full/avoEOJ/
                   </a>
                 </span>
               </div>

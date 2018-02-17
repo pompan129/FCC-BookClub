@@ -10,33 +10,30 @@ import Button from 'material-ui/Button';
 
 //assets
 import logo from "../assets/logo.png";
-
+//styles
+const styles = {
+  button: {
+    margin: '0 .25em',
+  },
+  toolbar:{
+    backgroundColor:'#0D47A1',
+    justifyContent:'space-between'
+  },
+  img:{
+    margin: '0 0 0 1.5em',
+    flex: 1
+  },
+  link:{
+  textDecoration: 'none',
+  color:'white',
+  margin:'0 .5em',
+  fontSize:'1.25em'
+  }
+};
 
 const Navbar = (props)=>{
-  const styles = {
-    button: {
-      margin: '0 .25em',
-    },
-    toolbar:{
-      backgroundColor:'#0D47A1',
-      justifyContent:'space-between'
-    },
-    img:{
-      margin: '0 0 0 1.5em',
-      flex: 1
-    },
-    link:{
-    textDecoration: 'none',
-    color:'white',
-    margin:'0 .5em',
-    fontSize:'1.25em'
-    }
-  };
 
-  console.log('Navbar',props);//todo
-
-  return (/*<FontIcon className="muidocs-icon-custom-sort" />*///todo
-
+  return (
     <AppBar>
       <Toolbar style={styles.toolbar}>
           <Link to="/"><img src={logo} alt="Book Borrow logo" style={styles.img}/></Link>
@@ -49,6 +46,7 @@ const Navbar = (props)=>{
               onClick={()=>{props.renderModal(true,'signup')}}
               style={styles.button}>Sign Up</Button>}
             {!props.authenticated && <Button label="Login"
+              color='secondary'
               onClick={()=>{props.renderModal(true,'signin')}}
               style={styles.button}>Login</Button>}
             {props.authenticated && <Button label="Logout"
