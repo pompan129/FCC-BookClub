@@ -4,7 +4,8 @@ import Axios from "axios";
 export const BATCH_ACTIONS = "BATCH_ACTIONS";
 export const SET_AUTHENTICATION = "SET_AUTHENTICATION";
 export const SET_USERNAME = "SET_USERNAME";
-export const SET_USER = "SET_USER";
+export const SET_USER = "SET_USER";DELETE_USER
+export const DELETE_USER = "DELETE_USER";
 export const UPDATE_USER_LIBRARY = "UPDATE_USER_LIBRARY";
 export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
 export const AUTH_JWT = "AUTH_JWT";
@@ -122,6 +123,12 @@ export const setUser = (user)=>{
     }
 }
 
+export const deleteUser = ()=>{
+  return {
+      type: DELETE_USER
+    }
+}
+
 //login user --a thunk
 export const signin = (username,password,successCallback)=>{
 
@@ -185,7 +192,7 @@ export const logout=(history)=>{
   console.log('action:logout');//todo
   const batch = [];
   batch.push(setAuthentication(false));
-  batch.push(setUsername(""));
+  batch.push(deleteUser());
   localStorage.setItem('jwt','');//JWT in localstorage for protected routes
   history.push('/');
   return batchActions(batch);
@@ -245,11 +252,11 @@ export const fetchBooks = ()=>{
 
       Axios.get('/api/booklist/list')
         .then((resp)=>{
-          //  console.log("fetchBooks", resp.data);//todo
+          console.log("fetchBooks-then", resp.data);//todo
             dispatch(batchActions([setBooks(resp.data),fecthDone()]));
         })
         .catch((err)=>{
-          console.log("fetchBooks", err.response.data.error);//todo
+          console.log("fetchBooks", err);//todo
           dispatch(batchActions([setBooksError(err.response.data.error),fecthDone()]));
         })
   }

@@ -44,10 +44,9 @@ class LoanedPanel extends React.Component {
 
   getFooter = (book)=>{
     return {
-      icon:<DeleteIcon/>,
-      text:"Request Book Return",
-      active:true,
-      action:()=>this.props.removeBookFromWishlist(book._id),
+      icon:'',
+      text:`Loaned to ${book.rq_status.rq_by}`,
+      active:false,
       theme:footerTheme.remove
     }
   }

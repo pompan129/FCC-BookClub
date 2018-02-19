@@ -52,8 +52,8 @@ module.exports = function(app){
     app.get('/api/booklist/list',(req,res)=>{
         Book.find((err, books)=>{
           if (err) {
-            console.log(err);
-            return res.send(err);
+            console.log('/api/booklist/list>>>error',err);
+            return next(err);
           }
           res.send(books);
         })

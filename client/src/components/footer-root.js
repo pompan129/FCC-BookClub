@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from 'material-ui/styles';
+import Typography from 'material-ui/Typography';
 
 const Styles = {
   wrap:{
@@ -33,6 +34,7 @@ const Styles = {
   },
   small:{
     color:'white',
+    paddingTop:'1rem',
     '& a':{
       textDecoration:'none',
       color:'#64dd17'
@@ -45,27 +47,31 @@ const Footer = (props)=>{
     <div className={props.classes.wrap}>
       <div className={props.classes.main}>
         <div className={props.classes.box}>
-          <h3>PROJECT</h3>
-          <p>
+          <Typography  type="title" color='inherit' gutterBottom>PROJECT</Typography>
+          <Typography>
             A freeCodeCamp full-stack project
             Check project descriptions
             <a href="https://www.freecodecamp.org/challenges/manage-a-book-trading-club"> here. </a>
-          </p>
+          </Typography>
         </div>
         <div className={props.classes.box}>
-          <h3>TECH STACK</h3>
+          <Typography  type="title" color='inherit'>TECH STACK</Typography>
           <ul>
-            <li>Front-end: React + Redux + React Router + Material UI React</li>
-            <li>Back-end: Express.js + MongoDB + NodeJS</li>
-            <li>Public API: Google Books API</li>
+            <li><Typography>Front-end: React + Redux + React Router + Material UI React</Typography></li>
+            <li><Typography>Back-end: Express.js + MongoDB + NodeJS</Typography></li>
+            <li><Typography>Public API: Google Books API</Typography></li>
           </ul>
         </div>
         <div className={props.classes.box}>
-          <h3>AUTHOR: Kurt Johnson</h3>
+          <Typography  type="title" color='inherit'>AUTHOR: Kurt Johnson</Typography>
           <ul>
-            <li>A web developer in Sacramento, CA</li>
-            <li>View my resume:</li>
-            <li><a href="https://registry.jsonresume.org/kurtjohnson">https://registry.jsonresume.org/kurtjohnson</a></li>
+            <li><Typography>A web developer in Sacramento, CA</Typography></li>
+            <li><Typography>View my resume:</Typography></li>
+            <li>
+              <a href="https://registry.jsonresume.org/kurtjohnson">
+                <Typography>https://registry.jsonresume.org/kurtjohnson</Typography>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
