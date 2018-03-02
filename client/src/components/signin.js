@@ -8,7 +8,25 @@ import Dialog,
 import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
-import { renderModal,signin} from '../actions';
+import Typography from 'material-ui/Typography';
+import { renderModal,signin,setAuthenticationError} from '../actions';
+
+//styles
+const styles = {
+  dialogTitle:{
+    backgroundColor:'#1faa00',
+    textAlign:'center',
+    color: 'white',
+    marginBottom:'1rem'
+  },
+  footer:{
+    color:'#999',
+    textAlign:'center',
+    cursor:'pointer',
+    padding:'.5rem'
+  }
+}
+
 
 class SignInModal extends React.Component {
   constructor(props){
@@ -23,7 +41,8 @@ class SignInModal extends React.Component {
    }
 
    componentWillReceiveProps(nextProps){
-     this.setState({open:nextProps.modal.visible && (nextProps.modal.modal_type === 'signin'),})
+     this.setState({open:nextProps.modal.visible && (nextProps.modal.modal_type === 'signin'),
+         error:nextProps.user.error})
    }
 
    handleSubmit(event){
@@ -50,8 +69,26 @@ class SignInModal extends React.Component {
 
     return (
         <Dialog open={this.state.open}
+          onExited={()=>{this.props.setAuthenticationError('')}}
           onClose={()=>{this.props.renderModal(false,'')}}>
-          <DialogTitle>Sign In</DialogTitle>
+          <DialogTitle
+            disableTypography
+            style={styles.dialogTitle}
+            >
+            <Typography
+              color='inherit'
+              type="headline"
+              >Sign In</Typography>
+          </DialogTitle>
+          {
+            this.state.error?
+              <div style={{width:'75%',margin:'auto',color:'red',textAlign:'center'}}>
+                <span >
+                  {this.state.error}
+                </span>
+              </div>:
+              ''
+          }
           <DialogContent>
             <TextField
             id="username"
@@ -73,16 +110,14 @@ class SignInModal extends React.Component {
             <Button onClick={this.handleSubmit} color='primary'>Submit</Button>
             <Button
               onClick={()=>this.props.renderModal(false,'')}
-              color='error'
               >Cancel</Button>
           </DialogActions>
           <Divider/>
-          <div>Or
+          <div style={styles.footer}>
             <a
               onClick={()=>this.props.renderModal(true,'signup')}>
-                 Sign Up
+              Create a new account
             </a>
-            to start your new account
            </div>
         </Dialog>
     );
@@ -96,7 +131,7 @@ function mapStateToProps({modal,user}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      { renderModal,signin
+      { renderModal,signin,setAuthenticationError
       }, dispatch);
 }
 

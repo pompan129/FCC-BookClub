@@ -23,6 +23,10 @@ const styles = {
     flexWrap:'wrap',
     justifyContent:'center',
     paddingTop:"1.5rem",
+  },
+  error:{
+    color:'red',
+
   }
 }
 
@@ -46,7 +50,6 @@ const footerTheme = {
 class BookList extends React.Component {
 
   componentDidMount=()=>{
-    //this.props.setHeaderMessage({title:"Browse Books",sub:"Click on an available title to trade"})
     this.props.fetchBooks();
   }
 
@@ -94,8 +97,9 @@ class BookList extends React.Component {
         subtitle="click on an available book to make a trade"
         fetching={message.fetching}
         >
+          {books.error && <span style={styles.error}><h3>{books.error.statusText}</h3></span>}
           <div className="book-list" style={styles.list}>
-          {books && books.map((book,index)=>{
+          {books.books && books.books.map((book,index)=>{
 
               //don't show if ...
               if(user.authenticated && book.owner === user.username)return '';
@@ -116,7 +120,7 @@ class BookList extends React.Component {
 
 
 function mapStateToProps({books,message,user}){
-    return {books:books.books,message,user}
+    return {books,message,user}
 }
 
 function mapDispatchToProps(dispatch) {

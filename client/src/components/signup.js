@@ -3,11 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Dialog,
       {DialogTitle,
-       DialogContent,
-       DialogActions} from 'material-ui/Dialog';
-import Typography from 'material-ui/Typography';
+       DialogContent} from 'material-ui/Dialog';
+import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
-import ButtonBase from 'material-ui/ButtonBase';
 import TextField from 'material-ui/TextField';
 import { renderModal,signup,setAuthenticationError} from '../actions';
 
@@ -18,16 +16,14 @@ const styles = {
     textAlign:'center',
     color: 'white',
   },
-  dialogTitleH2:{
-    margin:'0'
-  },
-  dialogActions:{
-    position:'relative',
-  },
-  submitButton:{
-    width:'100%'
+  footer:{
+    color:'#999',
+    textAlign:'center',
+    cursor:'pointer',
+    padding:'.5rem'
   }
 }
+
 
 
 class SignUpModal extends React.Component {
@@ -86,7 +82,6 @@ class SignUpModal extends React.Component {
     return (
       <Dialog open={this.state.open}
         onExited={()=>{this.props.setAuthenticationError('')}}
-        style={styles.dialog}
         onClose={()=>{this.props.renderModal(false,'')}}>
         <DialogTitle  disableTypography style={styles.dialogTitle}>
           <h2 style={styles.dialogTitleH2}>Signup</h2>
@@ -130,6 +125,13 @@ class SignUpModal extends React.Component {
           onClick={this.handleSubmit}>
           Submit
         </Button>
+        <Divider/>
+        <div style={styles.footer}>
+          <a
+            onClick={()=>this.props.renderModal(true,'signin')}>
+            LOGIN to your account
+          </a>
+         </div>
       </Dialog>
     );
   }
@@ -148,7 +150,3 @@ function mapDispatchToProps(dispatch) {
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(SignUpModal);
-
-
-
-//  <Button onClick={()=>this.props.renderModal(false,'')}>Cancel</Button>

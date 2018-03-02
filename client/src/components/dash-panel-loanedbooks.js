@@ -10,7 +10,6 @@ import Book from "./book-card";
 //material UI components todo
 
 //assets
-import DeleteIcon from 'material-ui-icons/Delete';
 import Red from 'material-ui/colors/red';
 
 //styles

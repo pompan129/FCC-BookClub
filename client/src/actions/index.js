@@ -4,7 +4,7 @@ import Axios from "axios";
 export const BATCH_ACTIONS = "BATCH_ACTIONS";
 export const SET_AUTHENTICATION = "SET_AUTHENTICATION";
 export const SET_USERNAME = "SET_USERNAME";
-export const SET_USER = "SET_USER";DELETE_USER
+export const SET_USER = "SET_USER";
 export const DELETE_USER = "DELETE_USER";
 export const UPDATE_USER_LIBRARY = "UPDATE_USER_LIBRARY";
 export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
@@ -151,8 +151,9 @@ export const signin = (username,password,successCallback)=>{
         successCallback();
       })
       .catch((err)=>{
-        console.log("signin", err.response.data.error);//todo
-        dispatch(setAuthenticationError(err.response.data.error));
+        console.log("signin", err.response.statusText);//todo
+        dispatch(batchActions([setAuthenticationError(err.response.statusText),
+          fecthDone()]));
       })
   }
 }
@@ -256,8 +257,8 @@ export const fetchBooks = ()=>{
             dispatch(batchActions([setBooks(resp.data),fecthDone()]));
         })
         .catch((err)=>{
-          console.log("fetchBooks", err);//todo
-          dispatch(batchActions([setBooksError(err.response.data.error),fecthDone()]));
+          console.log("fetchBooks", err.response);//todo
+          dispatch(batchActions([setBooksError(err.response),fecthDone()]));
         })
   }
 }
@@ -367,15 +368,6 @@ export const addBook = (book,username)=>{
       })
   }
 }
-
-/*
-export const updateUserLibrary=(user)=>{
-  return {
-      type: UPDATE_USER_LIBRARY,
-      payload: user.book_ids
-    }
-}
-*/
 
 export const removeBookFromWishlist = (bookid)=>{
 

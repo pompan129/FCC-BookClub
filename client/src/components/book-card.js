@@ -35,8 +35,17 @@ const styles = {
   },
   content:{
     padding:'0',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     textAlign:'left',
     margin:'1rem .5rem'
+  },
+  entry:{
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    textAlign:'left',
   },
   footer:{
     margin:0,
@@ -72,9 +81,9 @@ const BookCard = (props)=>{
             root:classes.headerRoot,subheader:classes.subheader}}
         />
         <CardContent className={classes.content}>
-          <Typography type="caption">by: {authors}</Typography> {/*todo put in commas*/}
-          <Typography type="caption">{publisher || '--'}</Typography>
-          <Typography type="caption">{publishedDate || '--'}</Typography>
+          <Typography className={classes.entry} type="caption">by: {authors}</Typography> {/*todo put in commas*/}
+          <Typography className={classes.entry}  type="caption">{publisher || '--'}</Typography>
+          <Typography className={classes.entry} type="caption">{publishedDate || '--'}</Typography>
         </CardContent>
         <Divider light />
         <CardActions disableActionSpacing={true} className={classes.actions}>

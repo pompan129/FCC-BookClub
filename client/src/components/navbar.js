@@ -1,7 +1,5 @@
 import React from "react";
 import {Link} from 'react-router-dom';
-import { withRouter } from 'react-router';
-
 
 //material UI components
 import Toolbar from 'material-ui/Toolbar';
@@ -16,8 +14,9 @@ const styles = {
     margin: '0 .25em',
   },
   toolbar:{
-    backgroundColor:'#0D47A1',
-    justifyContent:'space-between'
+    backgroundColor:'transparent',
+    justifyContent:'space-between',
+    borderBottom:'1px solid grey'
   },
   img:{
     margin: '0 0 0 1.5em',
@@ -25,9 +24,13 @@ const styles = {
   },
   link:{
   textDecoration: 'none',
-  color:'white',
+  color:'grey',
   margin:'0 .5em',
-  fontSize:'1.25em'
+  fontSize:'1.25em',
+  '&:hover': {
+    color: '#000',
+    backgroundColor:'#999'
+    }
   }
 };
 
