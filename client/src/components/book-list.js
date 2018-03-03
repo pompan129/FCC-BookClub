@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 //actions
 import {fetchBooks,
   requestTrade,
+  renderModal,
   setHeaderMessage} from '../actions';
 
 //components
@@ -34,7 +35,9 @@ const footerTheme = {
   disabled: outerTheme => ({
     ...outerTheme,
     footer: {
-      backgroundColor:outerTheme.palette.grey[200]
+      backgroundColor:outerTheme.palette.grey[100],
+      hoverBackgroundColor:outerTheme.palette.grey[300],
+      cursor:'pointer'
     },
   }),
   available: outerTheme => ({
@@ -60,8 +63,8 @@ class BookList extends React.Component {
       return {
         icon:'',
         text:"Login to Trade Books",
-        active:false,
-        action:undefined,
+        active:true,
+        action:()=>this.props.renderModal(true,'signin'),
         theme:footerTheme.disabled
       }
     }
@@ -125,7 +128,7 @@ function mapStateToProps({books,message,user}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {fetchBooks,setHeaderMessage,requestTrade}, dispatch);
+      {fetchBooks,setHeaderMessage,requestTrade,renderModal}, dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(BookList)
