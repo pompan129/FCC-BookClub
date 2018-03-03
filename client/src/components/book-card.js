@@ -1,72 +1,81 @@
 import React from "react";
-import { withStyles } from 'material-ui/styles';
-import Card,
-  {CardHeader, CardMedia, CardContent,CardActions} from 'material-ui/Card';
-import Divider from 'material-ui/Divider';
-import Typography from 'material-ui/Typography';
+import { withStyles } from "material-ui/styles";
+import Card, {
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions
+} from "material-ui/Card";
+import Divider from "material-ui/Divider";
+import Typography from "material-ui/Typography";
 import Footer from "./book-card-footer";
 import imageNotAvailable from "../assets/ImageNotAvailable.png";
 
-
 const styles = {
   card: {
-    width: '15rem',
-    margin:'.5rem',
-    overflow: 'hidden'
+    width: "15rem",
+    margin: ".5rem",
+    overflow: "hidden"
   },
   media: {
-    height: '15rem',
+    height: "15rem"
   },
-  headerRoot:{
-    padding:'0 .5rem'
+  headerRoot: {
+    padding: "0 .5rem"
   },
-  title:{
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    width:'14rem'
+  title: {
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+    overflow: "hidden",
+    width: "14rem"
   },
-  subheader:{
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    textAlign:'left',
-    width:'14rem',
+  subheader: {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    textAlign: "left",
+    width: "14rem"
   },
-  content:{
-    padding:'0',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    textAlign:'left',
-    margin:'1rem .5rem'
+  content: {
+    padding: "0",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    textAlign: "left",
+    margin: "1rem .5rem"
   },
-  entry:{
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    textAlign:'left',
+  entry: {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    textAlign: "left"
   },
-  footer:{
-    margin:0,
-    cursor: 'pointer',
-    width:'100%',
-    height:'100%',
-    position:'relative'
+  footer: {
+    margin: 0,
+    cursor: "pointer",
+    width: "100%",
+    height: "100%",
+    position: "relative"
   },
-  actions:{
-    margin:0,
-    padding:0
+  actions: {
+    margin: 0,
+    padding: 0
   }
-
 };
 
-const BookCard = (props)=>{
+const BookCard = props => {
   //console.log("BookCard", props);//todo
-  const { classes,footer,authors,publisher,publishedDate,
-    thumbnail,title} = props;
+  const {
+    classes,
+    footer,
+    authors,
+    publisher,
+    publishedDate,
+    thumbnail,
+    title
+  } = props;
 
-  return(
+  return (
     <div className="book-card">
       <Card className={classes.card}>
         <CardMedia
@@ -76,22 +85,35 @@ const BookCard = (props)=>{
         />
         <CardHeader
           title={title}
-        subheader={""}
-          classes={{title:classes.title,
-            root:classes.headerRoot,subheader:classes.subheader}}
+          subheader={""}
+          classes={{
+            title: classes.title,
+            root: classes.headerRoot,
+            subheader: classes.subheader
+          }}
         />
         <CardContent className={classes.content}>
-          <Typography className={classes.entry} type="caption">by: {authors}</Typography> {/*todo put in commas*/}
-          <Typography className={classes.entry}  type="caption">{publisher || '--'}</Typography>
-          <Typography className={classes.entry} type="caption">{publishedDate || '--'}</Typography>
+          <Typography className={classes.entry} type="caption">
+            by: {authors}
+          </Typography>{" "}
+          {/*todo put in commas*/}
+          <Typography className={classes.entry} type="caption">
+            {publisher || "--"}
+          </Typography>
+          <Typography className={classes.entry} type="caption">
+            {publishedDate || "--"}
+          </Typography>
         </CardContent>
         <Divider light />
         <CardActions disableActionSpacing={true} className={classes.actions}>
-          <Footer {...footer}>{footer.icon}{footer.text}</Footer>
+          <Footer {...footer}>
+            {footer.icon}
+            {footer.text}
+          </Footer>
         </CardActions>
       </Card>
     </div>
-  )
-}
+  );
+};
 
 export default withStyles(styles)(BookCard);
