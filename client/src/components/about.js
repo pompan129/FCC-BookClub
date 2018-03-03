@@ -143,7 +143,8 @@ const About = (props)=>{
                 <span className={props.classes.logoSpan} style={{backgroundColor:"white"}}>
                   <GoogleBooksLogo/>
                   <Typography type="subheading" style={{color:'black',margin:'.25rem .5rem'}}>Google Books API</Typography>
-                </span></a>
+                </span>
+              </a>
             </div>
             <Typography type="display1" gutterBottom>About The Author</Typography>
 
@@ -158,9 +159,15 @@ const About = (props)=>{
                 <Typography type="title" gutterBottom>A web developer in Sacramento, CA</Typography>
                 <span style={{display:'flex',alignItems:'center'}}>
                   <Typography type="body2" gutterBottom>Get in touch: </Typography>
-                  <GithubLogo className={props.classes.getInTouchLogo}/>
-                  <FreecodecampLogo className={props.classes.getInTouchLogo}/>
-                  <CodepenLogo className={props.classes.getInTouchLogo}/>
+                  <a href="https://github.com/pompan129">
+                    <GithubLogo className={props.classes.getInTouchLogo}/>
+                  </a>
+                  <a href="https://www.freecodecamp.org/pompan129">
+                    <FreecodecampLogo className={props.classes.getInTouchLogo}/>
+                  </a>
+                  <a href="https://codepen.io/fazbat/">
+                    <CodepenLogo className={props.classes.getInTouchLogo}/>
+                  </a>
                 </span>
                 <span styel={{margin:'1rem'}}>
                   <Typography type="body2" gutterBottom>View my portfolio @ </Typography>
