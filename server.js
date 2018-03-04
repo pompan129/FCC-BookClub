@@ -26,6 +26,25 @@ db.once("open", function() {
 BookRoutes(app); //add routes for Books DB
 UserRoutes(app); //add routes for user DB
 
+if (process.env.NODE_ENV === "production") {
+  console.log(">>>(process.env.NODE_ENV === 'production'");
+  //app.use(express.static(path.join(__dirname, 'client/build')));
+  app.use(express.static("client/build")); //TODO
+
+  app.get("/*", function(req, res) {
+    console.log("call to home>>>", __dirname);
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+} else {
+  console.log(">(process.env.NODE_ENV !== 'production'");
+  app.use(express.static(path.join(__dirname, "client/public")));
+
+  app.get("/", function(req, res) {
+    console.log("call to home");
+    res.sendFile(path.join(__dirname, "client/public", "index.html"));
+  });
+}
+
 app.set("port", process.env.PORT || 3001);
 
 app.listen(app.get("port"), () => {
