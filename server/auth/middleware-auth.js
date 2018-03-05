@@ -1,9 +1,9 @@
 const User = require("../models/user");
 const jwt = require("jwt-simple");
-const env = require("../../environment.variables");
+//const env = require("../../environment.variables");
 
 const getToken = function(payload) {
-  const token = jwt.encode({ username: payload.username }, env.SECRET);
+  const token = jwt.encode({ username: payload.username }, process.env.SECRET);
   return token;
 };
 
@@ -59,7 +59,7 @@ exports.JWTauth = function(req, res, next) {
 
   // decode
   try {
-    const decoded = jwt.decode(token, env.SECRET);
+    const decoded = jwt.decode(token, process.env.SECRET);
     console.log("JWTauth:", decoded); //todo
     req.auth = true;
     next();
