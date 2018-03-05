@@ -3,7 +3,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/user");
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
-const env = require("../../environment.variables");
+//const env = require("../../environment.variables");
 
 //local signin strategy w password
 passport.use(
@@ -35,7 +35,7 @@ passport.use(
 //verify protected route w token
 const jwtStrategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("Bearer"), //ExtractJwt.fromHeader("Authorization"),
-  secretOrKey: env.SECRET
+  secretOrKey: process.env.SECRET
 };
 
 //for refresh of page verify user & token
