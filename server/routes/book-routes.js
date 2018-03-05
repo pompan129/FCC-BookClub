@@ -1,5 +1,5 @@
 const request = require("request"); //to make 0auth requests
-const env = require("../../environment.variables");
+//const env = require("../../environment.variables");
 const Book = require("../models/books");
 const User = require("../models/user");
 
@@ -24,7 +24,7 @@ module.exports = function(app) {
         url: "https://www.googleapis.com/books/v1/volumes",
         qs: {
           q,
-          key: env.GOOGLE_API_KEY,
+          key: process.env.GOOGLE_API_KEY,
           startIndex: "0",
           maxResults: "12",
           projection: "lite"
