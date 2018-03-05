@@ -1,5 +1,5 @@
 const request = require("request"); //to make 0auth requests
-const env = require("../../environment.variables");
+//const env = require("../../environment.variables");
 const Book = require("../models/user");
 const Authenticate = require("../auth/middleware-auth");
 const passport = require("passport"); //todo
