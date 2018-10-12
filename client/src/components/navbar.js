@@ -26,7 +26,6 @@ const styles = {
   link:{
   textDecoration: 'none',
   color:'grey',
-  //margin:'0 .5em',
   padding:'1rem',
   fontSize:'1.25em',
   '&:hover': {

@@ -13,7 +13,7 @@ import registerServiceWorker from "./registerServiceWorker";
 const rootReducer = enableBatching(reducers);
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 ReactDOM.render(
   <Provider store={store}>

@@ -5,7 +5,7 @@ import Typography from 'material-ui/Typography';
 const Styles = {
   wrap:{
     flexDirection:'column',
-    backgroundColor:'#0D47A1',
+    backgroundColor:'#273336',
     padding:'1rem',
 
   },
@@ -29,7 +29,7 @@ const Styles = {
     },
     '& a':{
       textDecoration:'none',
-      color:'#64dd17'
+      color:'#5F909C'
     }
   },
   small:{
@@ -37,7 +37,7 @@ const Styles = {
     paddingTop:'1rem',
     '& a':{
       textDecoration:'none',
-      color:'#64dd17'
+      color:'#5F909C'
     }
   }
 }

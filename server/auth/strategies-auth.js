@@ -8,7 +8,7 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 //local signin strategy w password
 passport.use(
   new LocalStrategy(function(username, password, done) {
-    console.log("localstrategy", username);
+    //console.log("localstrategy", username);  todo
     User.findOne({ username: username }, function(err, user) {
       if (err) {
         console.log("localstrategy:", err);
