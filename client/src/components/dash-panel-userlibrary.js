@@ -8,11 +8,9 @@ import {removeBook} from '../actions';
 //components
 import Book from "./book-card";
 
-//material UI components todo
-
 //assets
 import DeleteIcon from 'material-ui-icons/Delete';
-import Red from 'material-ui/colors/red';
+
 
 //styles
 const styles = {
@@ -27,8 +25,8 @@ const footerTheme = {
   remove: outerTheme => ({
     ...outerTheme,
     footer: {
-      hovercolor: 'white',
-      hoverBackgroundColor:Red[300],
+      hovercolor: outerTheme.palette.error.main,
+      hoverBackgroundColor:outerTheme.palette.grey[100],
       cursor:'pointer',
     },
   }),
@@ -64,7 +62,6 @@ class Libray extends React.Component {
     }
 
   render(){
-    console.log(this.state.term);//todo
     const {userlist} = this.props;
 
     return (

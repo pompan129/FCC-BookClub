@@ -46,7 +46,7 @@ class LoanedPanel extends React.Component {
       icon:'',
       text:`Loaned to ${book.rq_status.rq_by}`,
       active:false,
-      theme:footerTheme.remove
+      //theme:footerTheme.remove
     }
   }
 

@@ -13,6 +13,7 @@ import SignUpModal from "./components/signup";
 import SignInModal from "./components/signin";
 import EditUserDialogue from "./components/edit-user-dialogue";
 import red from "material-ui/colors/red";
+import blueGrey from "material-ui/colors/blueGrey";
 import {
   renderModal,
   logout,
@@ -23,19 +24,9 @@ import "./App.css";
 
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      light: "#C5CAE9",
-      main: "#273336",//#3F51B5",
-      dark: "#303F9F",
-      contrastText: "#fff"
-    },
-    secondary: {
-      light: "#9cff57",
-      main: "#D2E5ED",
-      dark: "#1faa00",
-      contrastText: "#000"
-    },
-    error: red
+    primary: {main:"#3E4E59"},
+    secondary: {main: "#D9BB93"},
+    error: {main:"#F25652"},
   }
 });
 
@@ -55,7 +46,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("App", "p:", this.props, "s:", this.state); //todo
     return (
       <MuiThemeProvider theme={theme}>
         <div className="App">

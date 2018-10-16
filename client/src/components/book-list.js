@@ -45,7 +45,7 @@ const footerTheme = {
     ...outerTheme,
     footer: {
       hovercolor: "white",
-      hoverBackgroundColor: outerTheme.palette.primary.light,
+      hoverBackgroundColor: outerTheme.palette.secondary.main,
       cursor: "pointer"
     }
   })
@@ -75,7 +75,7 @@ class BookList extends React.Component {
         active: true,
         action: () => this.props.requestTrade(_id, this.props.user.username),
         backgroundColor: "",
-        backgroundColorOver: Cyan["A400"],
+        //backgroundColorOver:,
         theme: footerTheme.available
       };
     }

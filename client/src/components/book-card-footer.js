@@ -30,13 +30,15 @@ const Styles = (theme)=>{
   }
 }}
 
-const theme3 = outerTheme => ({
+const theme3 = outerTheme => {
+  console.log("outertheme",outerTheme);
+  return {
   ...outerTheme,
-  footer: {
-    hovercolor: 'pink',
-    cursor:'pointer'
-  },
-});
+  footer:{
+    cursor:"inherit",
+    color:"inherit"
+  }
+}};
 
 const Footer = (props)=>{
   const {classes} = props;

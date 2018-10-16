@@ -14,7 +14,7 @@ import { renderModal,signin,setAuthenticationError} from '../actions';
 //styles
 const styles = {
   dialogTitle:{
-    backgroundColor:'#1faa00',
+    backgroundColor:'#25616E',
     textAlign:'center',
     color: 'white',
     marginBottom:'1rem'
@@ -77,7 +77,7 @@ class SignInModal extends React.Component {
             >
             <Typography
               color='inherit'
-              type="headline"
+              variant="headline"
               >Sign In</Typography>
           </DialogTitle>
           {

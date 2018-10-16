@@ -22,10 +22,10 @@ const Home = (props)=>{
       subtitle="Go ahead and borrow a book. I dare you!"
       >
       <div className={props.classes.home}>
-        <Typography type="display1" >
+        <Typography variant="display1" gutterBottom>
           Lend and borrow books from others
         </Typography>
-        <Typography type="title" gutterBottom>
+        <Typography variant="title" gutterBottom>
           A non-profit book sharing and exchanging platform.
         </Typography>
         <div className={props.classes.features}>

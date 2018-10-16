@@ -269,7 +269,6 @@ export const fetchBooks = () => {
 
     Axios.get("/api/booklist/list")
       .then(resp => {
-        console.log("fetchBooks-then", resp.data); //todo
         dispatch(batchActions([setBooks(resp.data), fecthDone()]));
       })
       .catch(err => {

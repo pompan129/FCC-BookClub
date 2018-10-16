@@ -74,14 +74,14 @@ const About = props => {
     <Root name="about-root" title="About" subtitle="">
       <div className={props.classes.about}>
         <div>
-          <Typography type="display2" gutterBottom>
+          <Typography variant="display2" gutterBottom>
             Project Purpose
           </Typography>
           <Typography paragraph>
             This is my version of the freeCodeCamp full-stack project "Manage a
             Book Trading Club"
           </Typography>
-          <Typography type="title" gutterBottom>
+          <Typography variant="title" gutterBottom>
             The project fullfills the following user stories:
           </Typography>
           <ul>
@@ -106,7 +106,7 @@ const About = props => {
             </li>
           </ul>
         </div>
-        <Typography type="title" gutterBottom>
+        <Typography variant="title" gutterBottom>
           Frontend Tech Stack
         </Typography>
         <div className={props.classes["logo-list"]}>
@@ -117,7 +117,7 @@ const About = props => {
             >
               <ReactLogo />
               <Typography
-                type="subheading"
+                variant="subheading"
                 style={{ color: "white", margin: ".25rem .5rem" }}
               >
                 React
@@ -131,7 +131,7 @@ const About = props => {
             >
               <ReduxLogo />
               <Typography
-                type="subheading"
+                variant="subheading"
                 style={{ color: "white", margin: ".25rem .5rem" }}
               >
                 Redux
@@ -145,7 +145,7 @@ const About = props => {
             >
               <ReactRouterLogo />
               <Typography
-                type="subheading"
+                variant="subheading"
                 style={{ color: "white", margin: ".25rem .5rem" }}
               >
                 React Router
@@ -159,7 +159,7 @@ const About = props => {
             >
               <MaterialUILogo />
               <Typography
-                type="subheading"
+                variant="subheading"
                 style={{ color: "white", margin: ".25rem .5rem" }}
               >
                 Material-UI
@@ -167,7 +167,7 @@ const About = props => {
             </span>
           </a>
         </div>
-        <Typography type="title" gutterBottom>
+        <Typography variant="title" gutterBottom>
           Backend Tech Stack
         </Typography>
         <div className={props.classes["logo-list"]}>
@@ -178,7 +178,7 @@ const About = props => {
             >
               <NodeLogo />
               <Typography
-                type="subheading"
+                variant="subheading"
                 style={{ color: "white", margin: ".25rem .5rem" }}
               >
                 Node.js
@@ -213,7 +213,7 @@ const About = props => {
             >
               <GoogleBooksLogo />
               <Typography
-                type="subheading"
+                variant="subheading"
                 style={{ color: "black", margin: ".25rem .5rem" }}
               >
                 Google Books API
@@ -221,7 +221,7 @@ const About = props => {
             </span>
           </a>
         </div>
-        <Typography type="display1" gutterBottom>
+        <Typography variant="display1" gutterBottom>
           About The Author
         </Typography>
 
@@ -232,14 +232,14 @@ const About = props => {
             style={{ width: "10rem", height: "10rem" }}
           />
           <div style={{ margin: "1rem" }}>
-            <Typography type="headline" gutterBottom>
+            <Typography variant="headline" gutterBottom>
               Kurt Johnson
             </Typography>
-            <Typography type="title" gutterBottom>
+            <Typography variant="title" gutterBottom>
               A web developer in Sacramento, CA
             </Typography>
             <span style={{ display: "flex", alignItems: "center" }}>
-              <Typography type="body2" gutterBottom>
+              <Typography variant="body2" gutterBottom>
                 Get in touch:{" "}
               </Typography>
               <a href="https://github.com/pompan129">
@@ -253,7 +253,7 @@ const About = props => {
               </a>
             </span>
             <span styel={{ margin: "1rem" }}>
-              <Typography type="body2" gutterBottom>
+              <Typography variant="body2" gutterBottom>
                 View my portfolio @{" "}
               </Typography>
               <a href="https://codepen.io/fazbat/full/avoEOJ/">

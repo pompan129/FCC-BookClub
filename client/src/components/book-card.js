@@ -59,7 +59,8 @@ const styles = {
   },
   actions: {
     margin: 0,
-    padding: 0
+    padding: 0,
+    height: "40px"
   }
 };
 

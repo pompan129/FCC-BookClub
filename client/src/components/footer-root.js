@@ -47,7 +47,7 @@ const Footer = (props)=>{
     <div className={props.classes.wrap}>
       <div className={props.classes.main}>
         <div className={props.classes.box}>
-          <Typography  type="title" color='inherit' gutterBottom>PROJECT</Typography>
+          <Typography  variant="title" color='inherit' gutterBottom>PROJECT</Typography>
           <Typography>
             A freeCodeCamp full-stack project
             Check project descriptions
@@ -55,7 +55,7 @@ const Footer = (props)=>{
           </Typography>
         </div>
         <div className={props.classes.box}>
-          <Typography  type="title" color='inherit'>TECH STACK</Typography>
+          <Typography  variant="title" color='inherit'>TECH STACK</Typography>
           <ul>
             <li><Typography>Front-end: React + Redux + React Router + Material UI React</Typography></li>
             <li><Typography>Back-end: Express.js + MongoDB + NodeJS</Typography></li>
@@ -63,7 +63,7 @@ const Footer = (props)=>{
           </ul>
         </div>
         <div className={props.classes.box}>
-          <Typography  type="title" color='inherit'>AUTHOR: Kurt Johnson</Typography>
+          <Typography  variant="title" color='inherit'>AUTHOR: Kurt Johnson</Typography>
           <ul>
             <li><Typography>A web developer in Sacramento, CA</Typography></li>
             <li><Typography>View my resume:</Typography></li>
